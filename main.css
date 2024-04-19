@@ -54,7 +54,7 @@ body {
     left: 0;
     width: 0;
     height: 2px;
-    background: white;
+    background: #dd3157;
     transition: .3s;
 }
 
@@ -69,6 +69,19 @@ body {
 .navmenu img {
     width: 1.5rem;
     float: left;
+    transition: filter 0.1s ease;
+}
+.navmenu img:hover {
+    filter: saturate(100%) invert(81%) 
+    sepia(97%) saturate(7484%) hue-rotate(327deg) 
+    brightness(86%) contrast(93%);
+}
+.account-box {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: lightblue;
+    padding: 10px;
 }
 /* End of Header */
 
@@ -141,7 +154,7 @@ body {
 
 .hero-page .btn-learn-more:hover {
     color: var(--contrast-color);
-    background: var(--accent-color);
+    background: #dd3157;
     border-color: var(--accent-color);
 }
 @media (max-width: 768px) {
@@ -202,12 +215,15 @@ body {
 }
 /* End of Brand List */
 /* Footer */
-.footer .container {
-    justify-content: space-around;
-    display: flex;
-    align-items: center;
+.footer {
     height: 50px;
     background-color: rgb(0, 0, 0);
+}
+.footer .container {
+    margin: 0 30px;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
 }
 .footer .container h3 {
     color: #ffffff;
@@ -216,12 +232,23 @@ body {
 }
 .footer .container .bottom-footer {
     display: flex;
-    float: left;
 }
 .footer .container img {
     margin-top: .9rem;
     margin-left: 10px;
-    width: 1.3rem;
+    width: 1.1rem;
 }
 /* End of Footer */
 /* End of Main */
+/* Log in */
+.wrapper {
+    background-color: black;
+}
+.wrapper .login .login-content {
+    
+    align-items: center;
+}
+.wrapper .login .login-content img {
+    height: 150px;
+}
+/* End of Log in */
