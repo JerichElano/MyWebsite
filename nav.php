@@ -1,6 +1,8 @@
 <?php
 @include 'config.php';
 
+session_start();
+
 if(isset($message)){
    foreach($message as $message){
       echo '
@@ -13,6 +15,54 @@ if(isset($message)){
 }
 ?>
 
+<style>
+    .account-box {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    .container-log-btn {
+        float: right;
+        display: flex;
+        align-items: center;
+        height: 8vh;
+        width: 80%;
+        flex-wrap: wrap;
+        padding-top: 10px;
+    }
+
+    .log-btn {
+        font-size: 15px;
+        line-height: 1.5;
+        color: #fff;
+        text-transform: uppercase;
+        height: 50px;
+        border-radius: 25px;
+        background: #dd3157;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 25px;
+        text-decoration: none;
+    
+        -webkit-transition: all 0.4s;
+        -o-transition: all 0.4s;
+        -moz-transition: all 0.4s;
+        transition: all 0.4s;
+    }
+    
+    .login-btn:hover {
+        background: #333333;
+    }
+</style>
+
 <header class="header">
     <div class="logo">
         <a href="#" class="logo-link">
@@ -22,17 +72,28 @@ if(isset($message)){
 
         <div class="navbar">
             <a href="#">Home</a>
-            <a href="#">Brands</a>
-            <a href="#">Recommended</a>
+            <a href="#brands">Smartphones</a>
+            <a href="#recommended">Recommended</a>
         </div>
     </div>
     <div class="navmenu">
         <a href="#"><img src="assets/img/cart.svg" alt="Cart Icon"></a>
-        <a href="login.php"><img src="assets/img/account.svg" alt="Account Icon"></a>
+        <a href="#" id="account-icon"><img src="assets/img/account.svg" alt="Account Icon"></a>
     </div>
-    <div class="account-box">
-    <p>username : <span><?php echo $_SESSION['user_name']; ?></span></p>
-    <p>email : <span><?php echo $_SESSION['user_email']; ?></span></p>
-    <a href="logout.php" class="delete-btn">logout</a>
-</div>
+    <div class="account-box" style="display: none;">
+        <?php if (isset($_SESSION['user_name']) && isset($_SESSION['user_email'])) : ?>
+            <p>username : <span><?php echo $_SESSION['user_name']; ?></span></p>
+            <p>email : <span><?php echo $_SESSION['user_email']; ?></span></p>
+                <div class="container-log-btn">
+                    <a href="logout.php" class="log-btn">logout</a>
+                </div>
+        <?php else : ?>
+                <p>Please log in to enjoy shopping</p>
+                <div class="container-log-btn">
+                    <a class="log-btn" href="login.php">Log in now</a>
+                </div>
+        <?php endif; ?>
+    </div>
 </header>
+
+<script src="assets/js/btn-on-clk.js"></script>

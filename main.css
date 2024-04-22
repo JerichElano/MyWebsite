@@ -6,7 +6,9 @@
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
 }
-
+html {
+    scroll-behavior: smooth;
+}
 body {
     min-height: 100vh;
 }
@@ -75,13 +77,6 @@ body {
     filter: saturate(100%) invert(81%) 
     sepia(97%) saturate(7484%) hue-rotate(327deg) 
     brightness(86%) contrast(93%);
-}
-.account-box {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: lightblue;
-    padding: 10px;
 }
 /* End of Header */
 
@@ -167,6 +162,67 @@ body {
     }
   }
 /* End of Hero Page */
+/* Brands */
+.brands {
+    background-color: rgb(241, 241, 241);
+}
+
+.brands h2 {
+    padding-top: 40px;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    font-size: 40px;
+}
+
+.brands-container {
+    padding: 25px 10% 100px 10%;
+    background-color: rgba(236, 37, 37, 0);
+    max-width: 100%;
+    margin:0 auto;
+    gap:1.5rem;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.main .brands .row {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 7px;
+}
+  
+.main .brands .column {
+    flex: 25%;
+    max-width: 25%;
+    padding: 7px;
+}
+  
+.main .brands .column img {
+    margin-top: 8px;
+    vertical-align: middle;
+    width: 100%;
+    transition: transform .7s ease;
+    border-radius: 8px;
+}
+
+.main .brands .column img:hover {
+    transform: scale(1.13);
+    border-radius: 9px;
+}
+
+@media screen and (max-width: 800px) {
+    .main .brands .column {
+        flex: 50%;
+        max-width: 50%;
+    }
+}
+  
+@media screen and (max-width: 600px) {
+    .main .brands .column {
+        flex: 100%;
+        max-width: 100%;
+    }
+}
+/* End of Brands */
 /* Brand List */
 .brand-list {
     min-height: 100%;
@@ -214,6 +270,154 @@ body {
     transform: translateZ(20px);
 }
 /* End of Brand List */
+/* Recommended */
+.recommended h2 {
+    padding-top: 40px;
+    color: white;
+    text-align: center;
+    font-size: 40px;
+}
+.recommended .box-container {
+    padding: 25px;
+    background-color: rgba(236, 37, 37, 0);
+    max-width: 100%;
+    margin:0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 20rem);
+    gap:1.5rem;
+    align-items: flex-start;
+    justify-content: center;
+}
+.recommended .box-container .box{
+    background-color: whitesmoke;
+    border:var(--border);
+    box-shadow: var(--box-shadow);
+    border-radius: .5rem;
+    padding:2rem;
+    text-align: center;
+    position: relative;
+}
+.recommended .box-container .box .image{
+    height: 15rem;
+    width: 100%;
+    object-fit: cover;
+}
+.recommended .box-container .box .fa-eye,
+.recommended .box-container .box .price{
+   position: absolute;
+   top:1rem;
+   border-radius: .5rem;
+}
+.recommended .box-container .box .price{
+    border-radius: 25px;
+   font-size: 1.5rem;
+   padding:.5rem;
+   background-color: rgba(194, 194, 194, 0.603);
+   color:var(--white);
+   left:1rem;
+}
+
+.recommended .box-container .box .fa-eye{
+   right:1rem;
+   height: 4.5rem;
+   width: 4.5rem;
+   line-height: 4.2rem;
+   font-size: 2rem;
+   background-color: var(--white);
+   color:var(--black);
+   border:var(--border);
+}
+
+.recommended .box-container .box .fa-eye:hover{
+   background-color: var(--black);
+   color:var(--white);
+}
+
+.recommended .box-container .box .name{
+   margin:0;
+   font-size: 2rem;
+   color:var(--black);
+}
+
+.recommended .box-container .box .qty{
+   width: 100%;
+   padding:.02rem 1.4rem;
+   font-size: 1.6rem;
+   color:var(--black);
+   border:var(--border);
+   border-radius: .5rem;
+   margin:.5rem 0;
+}
+.recommended .box-container .box .add-to-cart-btn,
+.recommended .box-container .box .buy-now-btn{
+   width: 100%;
+}
+.recommended {
+	height: 100%;
+	background: linear-gradient(-45deg, #75CAFF, #000000, #000000, #F4B1E8);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+/* -------------------------- */
+.quick-view form{
+   max-width: 60rem;
+   padding:2rem;
+   text-align: center;
+   border:var(--border);
+   box-shadow: var(--border);
+   border-radius: .5rem;
+   background-color: var(--white);
+   margin:0 auto;
+}
+.quick-view form .image{
+   height: 33rem;
+   border:var(--border);
+   border-radius: .5rem;
+}
+
+.quick-view form .name{
+   margin:1rem 0;
+   font-size: 2rem;
+   color:var(--black);
+}
+
+.quick-view form .price{
+   color:var(--red);
+   font-size: 2.5rem;
+   padding:.5rem 0;
+}
+
+.quick-view form .details{
+   padding:1rem 0;
+   font-size: 1.5rem;
+   color:var(--light-color);
+   line-height: 2;
+}
+
+.quick-view form .qty{
+   width: 100%;
+   padding:1.2rem 1.4rem;
+   font-size: 1.8rem;
+   color:var(--black);
+   border-radius: .5rem;
+   border:var(--border);
+   margin:.5rem 0;
+}
+/* ------------------------ */
+
+/* End of Recommended */
 /* Footer */
 .footer {
     height: 50px;

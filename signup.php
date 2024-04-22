@@ -21,7 +21,8 @@ if(isset($_POST['submit'])){
       if($pass != $cpass){
          $message[] = 'confirm password not matched!';
       }else{
-         mysqli_query($conn, "INSERT INTO `account`(name, email, password) VALUES('$name', '$email', '$pass')") or die('query failed');
+         mysqli_query($conn, "INSERT INTO `account`(name, email, password, account_type, account_creation) 
+		 VALUES('$name', '$email', '$pass', 'user', NOW())") or die('query failed');
          $message[] = 'registered successfully!';
          header('location:login.php');
       }
