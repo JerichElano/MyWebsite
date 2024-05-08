@@ -12,6 +12,26 @@ html {
 body {
     min-height: 100vh;
 }
+  
+.btn {
+    text-decoration: none;
+    color: var(--default-color);
+    font-weight: 400;
+    font-size: 15px;
+    display: inline-block;
+    padding: 8px 30px;
+    margin: 30px 0 0 0;
+    transition: 0.5s;
+    text-transform: uppercase;
+    border: 2px solid rgba(var(--default-color-rgb), 0.8);
+    border-radius: 15px;
+}
+
+.btn:hover {
+    color: var(--contrast-color);
+    background: #dd3157;
+    border-color: var(--accent-color);
+}
 /* Header */
 .header {
     position: fixed;
@@ -19,7 +39,7 @@ body {
     left: 0;
     width: 100%;
     padding: 10px 100px;
-    background: rgba(16, 21, 28, 0.7);
+    background: rgb(16, 21, 28);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -120,7 +140,7 @@ body {
 .hero-page .container h2 {
     text-align: center;
     margin: 0;
-    font-size: 48px;
+    font-size: 58px;
     text-transform: uppercase;
     font-weight: 700;
     color: white;
@@ -132,26 +152,7 @@ body {
     font-size: 24px;
     color: var(--heading-color);
 }
-  
-.hero-page .btn-learn-more {
-    text-decoration: none;
-    color: var(--default-color);
-    font-weight: 400;
-    font-size: 15px;
-    display: inline-block;
-    padding: 8px 30px;
-    margin: 30px 0 0 0;
-    transition: 0.5s;
-    text-transform: uppercase;
-    border: 2px solid rgba(var(--default-color-rgb), 0.8);
-    border-radius: 15px;
-}
 
-.hero-page .btn-learn-more:hover {
-    color: var(--contrast-color);
-    background: #dd3157;
-    border-color: var(--accent-color);
-}
 @media (max-width: 768px) {
     .hero-page h2 {
       font-size: 32px;
@@ -225,7 +226,7 @@ body {
 /* End of Brands */
 /* Brand List */
 .brand-list {
-    min-height: 100%;
+    height: 100px;
     display: grid;
     place-items: center;
 }
@@ -335,7 +336,7 @@ body {
 
 .recommended .box-container .box .name{
    margin:0;
-   font-size: 2rem;
+   font-size: 28px;
    color:var(--black);
 }
 
@@ -444,6 +445,114 @@ body {
 }
 /* End of Footer */
 /* End of Main */
+/* Checkout */   
+.heading {
+    text-align: center;
+    margin-top: 80px;
+    margin-bottom: 20px;
+    font-size: 30px;
+}
+
+.display-order{
+    max-width: 1200px;
+    margin:0 auto;
+    text-align: center;
+    padding-bottom: 0;
+}
+
+.display-order p{
+    display: inline-block;
+    border-radius: .5rem;
+    font-size: 1rem;
+    color:var(--black);
+    padding:1rem 1.5rem;
+    margin:.5rem;
+    background-color: lavenderblush;
+    box-shadow: var(--box-shadow);
+    border:var(--border);
+}
+
+.display-order p span{
+    color:var(--red);
+}
+
+.display-order .grand-total{
+    margin-top: 2rem;
+    font-size: 1.5rem;
+    color:var(--light-color);
+}
+
+.display-order .grand-total span{
+    color:var(--red);
+}
+
+.checkout form{
+    background-color: var(--white);
+    border:var(--border);
+    max-width: 1200px;
+    margin:0 auto;
+    border-radius: .5rem;
+    padding:2rem;
+    box-shadow: var(--border);
+}
+
+.checkout form h3{
+    padding:1.5rem;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    background-color: var(--black);
+    color:var(--white);
+    border-radius: .5rem;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.checkout form .flex{
+    display: flex;
+    flex-wrap: wrap;
+    gap:1rem;
+}
+
+.checkout form .flex .inputBox{
+    flex:1 1 40rem;
+}
+
+.checkout form .flex .inputBox input,
+.checkout form .flex .inputBox select{
+    margin:1rem 0;
+    width: 100%;
+    background-color: lavenderblush;
+    padding:1.2rem 1.4rem;
+    border:var(--border);
+    font-size: .8rem;
+    color:var(--black);
+    border-radius: .5rem;
+}
+
+.checkout form .flex .inputBox span{
+    font-size: 1rem;
+    color:var(--light-color);
+}
+    
+.checkout form .flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.checkout form .flex .inputBox {
+    flex: 1 1 calc(50% - 0.5rem);
+}
+
+.checkout form .flex .inputBox input,
+.checkout form .flex .inputBox select {
+    width: 100%;
+}
+
+.checkout form input .btn {
+    justify-content: center;
+}
+/* End of Checkout */
 /* Log in */
 .wrapper {
     background-color: black;
@@ -456,3 +565,286 @@ body {
     height: 150px;
 }
 /* End of Log in */
+/* User */
+
+/* End of User */
+/* Admin */
+/* Admin Nav */
+.admin-header {
+    position: sticky;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background-color: var(--dark-color);
+    box-shadow: #000000;
+}
+/* End of Admin Nav */
+/* Admin Page */
+/* Message */
+/* ................................................. */
+/* End of Message */
+.admin-container { 
+    text-align: center;
+}
+.admin-container h3{
+    font-size: 2rem;
+    text-transform: uppercase;
+    color:var(--black);
+    margin-bottom: 1rem;
+ }
+/* Button */
+.admin-container .btn {
+    background-color: rgb(255, 233, 233);
+    text-decoration: none;
+    color: var(--default-color);
+    font-weight: 400;
+    font-size: 15px;
+    display: inline-block;
+    padding: 8px 30px;
+    margin: 30px 0 0 0;
+    transition: 0.5s;
+    text-transform: uppercase;
+    border: 2px solid rgba(var(--default-color-rgb), 0.8);
+    border-radius: 15px;
+}
+
+.admin-container .btn:hover {
+    color: var(--contrast-color);
+    background: #db6d85;
+    border-color: var(--accent-color);
+}
+/* End of Button */
+.dashboard,
+.placed-orders,
+.users,
+.update-product {
+    padding-top: 100px;
+}
+
+.dashboard .box-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(23rem, 1fr));
+    gap:1.5rem;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+ }
+ 
+ .dashboard .box-container .box{
+    text-align: center;
+    border:var(--border);
+    background-color: lavenderblush;
+    box-shadow: var(--box-shadow);
+    padding:2.3rem;
+    border-radius: 3rem;
+ }
+ 
+ .dashboard .box-container .box h3{
+    font-size: 4rem;
+    color:var(--black);
+ }
+ 
+ .dashboard .box-container .box p{
+    padding:1.5rem;
+    border-radius: .5rem;
+    background-color: var(--light-bg);
+    color:var(--light-color);
+    border:var(--border);
+    margin-top: 2.5rem;
+    font-size: 1.5rem;
+ }
+ 
+ .add-products form{
+    max-width: 500px;
+    border-radius: .5rem;
+    background-color: var(--white); 
+    border:var(--border);
+    padding: 60px 0;
+    margin:0 auto;
+    box-shadow: var(--box-shadow);
+ }
+  
+ .add-products form .box{
+    width: 100%;
+    margin: .5rem 0;
+    font-size: 20px;
+    color:var(--black);
+    border-radius: .5rem;
+    background-color: lavenderblush;
+    padding:1.2rem 1.4rem;
+    border:var(--border);
+ }
+ 
+ .add-products form textarea{
+    height: 15rem;
+    resize: none;
+ }
+ 
+ .show-products .box-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 20rem);
+    gap:1.5rem;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-content: center;
+ }
+ 
+ .show-products .box-container .box{
+    text-align: center;
+    padding:2rem;
+    border:var(--border);
+    background-color: lavenderblush;
+    box-shadow: var(--box-shadow);
+    border-radius: .5rem;
+    position: relative;
+ }
+ 
+ .show-products .box-container .box .image{
+    height: 230px;
+    margin-bottom: .5rem;
+ }
+ 
+ .show-products .box-container .box .price{
+    background-color: var(--pink);
+    position: absolute;
+    top:1rem; left:1rem;
+    border-radius: .5rem;
+    color:var(--white);
+    padding:1rem;
+    font-size: 2rem;
+ }
+ 
+ .show-products .box-container .box .name{
+    margin:1rem 0;
+    font-size: 30px;
+    color:var(--black);
+ }
+ 
+ .show-products .box-container .box .details{
+    line-height: 1.5;
+    color:var(--light-color);
+    font-size: 16px;
+    padding:.5rem 0;
+ }
+ 
+ .update-product form{
+    max-width: 29rem;
+    border-radius: .5rem;
+    background-color: lavenderblush;
+    border:var(--border);
+    padding:2rem;
+    text-align: center;
+    margin:0 auto;
+    box-shadow: var(--box-shadow);
+ }
+ 
+ .update-product form h3{
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    color:var(--black);
+    margin-bottom: 1rem;
+ }
+ 
+ .update-product form .box{
+    width: 100%;
+    margin: 7px;
+    font-size: 15px;
+    color:var(--black);
+    border-radius: .5rem;
+    background-color: pink;
+    padding: .6rem 1.4rem;
+    border:var(--border);
+ }
+ 
+ .update-product form textarea{
+    height: 5rem;
+    resize: none;
+ }
+ 
+ .update-product .image{
+    height: 15rem;
+    border:var(--border);
+    border-radius: .5rem;
+ }
+ 
+ .placed-orders .box-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 33rem);
+    gap:1.5rem;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-content: center;
+ }
+ 
+ .placed-orders .box-container .box{
+    padding:2rem;
+    border:var(--border);
+    background-color: lavenderblush;
+    box-shadow: var(--box-shadow);
+    border-radius: .5rem;
+ }
+ 
+ .placed-orders .box-container .box p{
+    margin-bottom: 1rem;
+    font-size: 19px;
+    color:var(--light-color);
+ }
+ 
+ .placed-orders .box-container .box p span{
+    color:var(--pink);
+ }
+ 
+ .placed-orders .box-container .box form{
+    margin-top: 20px;
+    text-align: center;
+ }
+ 
+ .placed-orders .box-container .box form select{
+    width: 100%;
+    border:var(--border);
+    padding: .9rem 1rem;
+    font-size: 20px;
+    color:var(--black);
+    border:var(--border);
+    border-radius: .5rem;
+    margin:.5rem 0;
+ }
+ 
+ .users .box-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 33rem);
+    gap:1.5rem;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-content: center;
+ }
+ 
+ .users .box-container .box{
+    padding:2rem;
+    margin-bottom: 300px;
+    border:var(--border);
+    background-color: lavenderblush;
+    box-shadow: var(--box-shadow);
+    border-radius: .5rem;
+    text-align: center;
+    
+ }
+ 
+ .users .box-container .box p{
+    font-size: 20px;
+    color:var(--light-color);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+ }
+ 
+ .users .box-container .box p span{
+    color:var(--pink);
+ }
+ 
+ .users .box-container .box .delete-btn{
+    margin-top: .5;
+ }
+/* End of Admin Page */
+/* End of Admin */

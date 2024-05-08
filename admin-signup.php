@@ -1,53 +1,41 @@
 <?php
-@include('config.php');
 
-session_start();
+@include 'config.php';
 
 if(isset($_POST['submit'])){
 
-	$filter_email = filter_var($_POST['email'], FILTER_SANITIZE_STRING);
-	$email = mysqli_real_escape_string($conn, $filter_email);
-	$filter_pass = filter_var($_POST['pass'], FILTER_SANITIZE_STRING);
-	$pass = mysqli_real_escape_string($conn, md5($filter_pass));
- 
-	$select_users = mysqli_query($conn, "SELECT * FROM `account` WHERE email = '$email'") or die('query failed');
- 
- 
-	if(mysqli_num_rows($select_users) > 0){
-	   
-	   	$row = mysqli_fetch_assoc($select_users);
- 
-		if($row['password'] == $pass) {
-			if($row['account_type'] == 'admin'){
-	
-				$_SESSION['admin_name'] = $row['name'];
-				$_SESSION['admin_email'] = $row['email'];
-				$_SESSION['admin_id'] = $row['account_id'];
-				header('location:admin-page.php');
-	
-			}elseif($row['account_type'] == 'user'){
-		
-				$_SESSION['user_name'] = $row['name'];
-				$_SESSION['user_email'] = $row['email'];
-				$_SESSION['account_id'] = $row['account_id'];
-				header('location:index.php');
-			}
-			}else{
-				$message[] = 'Incorrect password!';
-			}
-		
- 
-	}	else{
-	   $message[] = 'User not found!';
-	}
- 
+   $filter_name = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
+   $name = mysqli_real_escape_string($conn, $filter_name);
+   $filter_email = filter_var($_POST['email'], FILTER_SANITIZE_STRING);
+   $email = mysqli_real_escape_string($conn, $filter_email);
+   $filter_pass = filter_var($_POST['pass'], FILTER_SANITIZE_STRING);
+   $pass = mysqli_real_escape_string($conn, md5($filter_pass));
+   $filter_cpass = filter_var($_POST['cpass'], FILTER_SANITIZE_STRING);
+   $cpass = mysqli_real_escape_string($conn, md5($filter_cpass));
+
+   $select_users = mysqli_query($conn, "SELECT * FROM `account` WHERE email = '$email'") or die('query failed');
+
+   if(mysqli_num_rows($select_users) > 0){
+      $message[] = 'user already exist!';
+   }else{
+      if($pass != $cpass){
+         $message[] = 'confirm password not matched!';
+      }else{
+         mysqli_query($conn, "INSERT INTO `account`(name, email, password, account_type, account_creation) 
+		 VALUES('$name', '$email', '$pass', 'admin', NOW())") or die('query failed');
+         $message[] = 'registered successfully!';
+         header('location:login.php');
+      }
+   }
+
 }
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Login | Nexus</title>
+	<title>Sign Up | Nexus</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
@@ -71,7 +59,7 @@ if(isset($_POST['submit'])){
 	<div class="limiter">
 		<div class="container-login">
 			<div class="container-back-btn">
-				<a href="index.php">
+				<a href="admin-page.php">
 					<button class="back-button">
 						Back
 					</button>
@@ -84,8 +72,16 @@ if(isset($_POST['submit'])){
 
 				<form class="login-form validate-form" method="post">
 					<span class="login-form-title">
-						Login
+						Admin Sign Up
 					</span>
+
+					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+						<input class="input100" type="text" name="name" placeholder="Username">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</span>
+					</div>
 
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
 						<input class="input100" type="email" name="email" placeholder="Email">
@@ -102,30 +98,32 @@ if(isset($_POST['submit'])){
 							<i class="fa fa-lock" aria-hidden="true"></i>
 						</span>
 					</div>
+
+					<div class="wrap-input100 validate-input" data-validate = "Password is required">
+						<input class="input100" type="password" name="cpass" placeholder="Confirm password">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+					</div>
+					
 					<div class="container-login-form-btn">
-						<input class="login-form-btn" type="submit" name="submit" value="Log in now">
+						<input class="login-form-btn" type="submit" name="submit" value="Sign up now">
 					</div>
 
 					<div class="text-center p-t-12">
 						<?php
 						if(isset($message)){
-							foreach($message as $message){
-								echo '
-								<div class="message">
-									<span>'.$message.'</span>
-									<i class="fas fa-times" onclick="this.parentElement.remove();"></i>
-								</div>
-								';
-							}
+						foreach($message as $message){
+							echo '
+							<div class="message">
+								<span>'.$message.'</span>
+								<i class="fas fa-times" onclick="this.parentElement.remove();"></i>
+							</div>
+							';
+						}
 						}
 						?>
-					</div>
-
-					<div class="text-center p-t-136">
-						<a class="txt2" href="signup.php">
-							Create your Account
-							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-						</a>
 					</div>
 				</form>
 			</div>

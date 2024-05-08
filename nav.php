@@ -1,8 +1,4 @@
 <?php
-@include 'config.php';
-
-session_start();
-
 if(isset($message)){
    foreach($message as $message){
       echo '
@@ -14,7 +10,20 @@ if(isset($message)){
    }
 }
 ?>
-
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+   document.body.addEventListener("click", function(event) {
+      // Check if the click was outside of any message
+      if (!event.target.closest(".message")) {
+         // Remove all message elements
+         var messages = document.querySelectorAll(".message");
+         messages.forEach(function(message) {
+            message.remove();
+         });
+      }
+   });
+});
+</script>
 <style>
     .account-box {
         position: absolute;
@@ -68,16 +77,16 @@ if(isset($message)){
         <a href="#" class="logo-link">
             <img src="assets/img/bscs.png" alt="logo">
         </a>
-        <a href="#" class="logo-name">Nexus</a>
+        <a href="index.php" class="logo-name">Nexus</a>
 
         <div class="navbar">
-            <a href="#">Home</a>
-            <a href="#brands">Smartphones</a>
-            <a href="#recommended">Recommended</a>
+            <a href="index.php">Home</a>
+            <a href="index.php#brands">Smartphones</a>
+            <a href="index.php#recommended">Recommended</a>
         </div>
     </div>
     <div class="navmenu">
-        <a href="#"><img src="assets/img/cart.svg" alt="Cart Icon"></a>
+        <a href="cart.php"><img src="assets/img/cart.svg" alt="Cart Icon"></a>
         <a href="#" id="account-icon"><img src="assets/img/account.svg" alt="Account Icon"></a>
     </div>
     <div class="account-box" style="display: none;">
