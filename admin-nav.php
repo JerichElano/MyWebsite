@@ -66,8 +66,8 @@
     <div class="account-box" style="display: none;">
         <p>Admin name : <span><?php echo $_SESSION['admin_name']; ?></span></p>
         <p>Email : <span><?php echo $_SESSION['admin_email']; ?></span></p>
-        <a href="logout.php" class="delete-btn">logout</a>
-        <p>Want to <a href="admin-signup.php">register</a> new admin account?</p>
+        <a href="logout.php" class="btn">Logout</a>
+        <p style="font-size: 12px;">Want to <a href="admin-signup.php" style="text-decoration: none; color: red;">register</a> new admin account?</p>
     </div>
 </header>
 

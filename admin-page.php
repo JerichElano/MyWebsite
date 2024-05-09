@@ -88,9 +88,14 @@
       <!-- put here the message that will appear using div ................................. -->
       <div class="admin-container">
          <section id="dashboard" class="dashboard">
+            <video controls autoplay muted loop>
+               <source src="assets/vid/advertisement.mp4" type="video/mp4">
+               Your browser does not support the video tag.
+            </video>
+            <h2 class="logo-name"><span style="color: #dd3157;">Nexus</span> Philippines</h2>
             <div class="box-container">
                <div class="box">
-                  <?php
+                  <?php 
                      $total_pendings = 0;
                      $select_pendings = mysqli_query($conn, "SELECT * FROM `orders` WHERE payment_status = 'pending'") or die('query failed');
                      while ($fetch_pendings = mysqli_fetch_assoc($select_pendings)) {
@@ -155,11 +160,12 @@
 
          <section id="products" class="add-products">
 
+            <img src="assets/img/phones/phone15.jpg" alt="Phone" class="display">
             <form action="" method="POST" enctype="multipart/form-data">
                <h3>Add new product</h3>
-               <input type="text" class="box" required placeholder="enter product name" name="name">
-               <input type="number" min="0" class="box" required placeholder="enter product price" name="price">
-               <textarea name="details" class="box" required placeholder="enter product details" cols="30" rows="10"></textarea>
+               <input type="text" class="box" required placeholder="Enter product name" name="name">
+               <input type="number" min="0" class="box" required placeholder="Enter product price" name="price">
+               <textarea name="details" class="box" required placeholder="Enter product details" cols="30" rows="10"></textarea>
                <input type="file" accept="image/jpg, image/jpeg, image/png" required class="box" name="image">
                <input type="submit" value="add product" name="add-product" class="btn">
             </form>
