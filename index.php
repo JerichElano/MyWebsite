@@ -20,7 +20,8 @@
 
     if (isset($_POST['add_to_cart'])) {
         if (!isset($account_id)) {
-        header('location:login.php');
+            header('location:login.php');
+            exit;
         }
 
         $product_id = $_POST['product_id'];
@@ -32,10 +33,12 @@
         $check_cart_numbers = mysqli_query($conn, "SELECT * FROM `cart` WHERE name = '$product_name' AND account_id = '$account_id'") or die('query failed');
 
         if (mysqli_num_rows($check_cart_numbers) > 0) {
-            $message[] = 'already added to cart';
+            $_SESSION['messages'][] = 'Already added to cart';
         } else {
             mysqli_query($conn, "INSERT INTO `cart`(account_id, pid, name, price, quantity, image) VALUES('$account_id', '$product_id', '$product_name', '$product_price', '$product_quantity', '$product_image')") or die('query failed');
-            $message[] = 'product added to cart';
+            $_SESSION['messages'][] = 'Product added to cart';
+            header('Location: ' . $_SERVER['REQUEST_URI']);
+            exit;
         }
 
     }
@@ -116,7 +119,7 @@
                     </div>
                 </div>
             </div>
-            <div class="brands">
+            <!-- <div class="brands">
                 <h2 id="brands">Smartphones</h2>
                 <div class="brands-container">
                     <div class="row">
@@ -142,8 +145,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="brand-list">
+            </div> -->
+            <div class="brand-lists">
                 <div class="slider">
                     <div class="slide-track">
                         <div class="slide">

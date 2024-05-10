@@ -1,24 +1,26 @@
 <?php
-if(isset($message)){
-   foreach($message as $message){
+if(isset($_SESSION['messages'])){
+   foreach($_SESSION['messages'] as $message){
       echo '
-      <div class="message">
-         <span>'.$message.'</span>
-         <i class="fas fa-times" onclick="this.parentElement.remove();"></i>
+      <div class="message-box">
+         <p>'.$message.'</p>
       </div>
       ';
    }
+   unset($_SESSION['messages']);
+//    echo '<script>setTimeout(function() { window.location.href = "index.php"; }, 3000);</script>';
 }
 ?>
+
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-   document.body.addEventListener("click", function(event) {
-      // Check if the click was outside of any message
-      if (!event.target.closest(".message")) {
-         // Remove all message elements
-         var messages = document.querySelectorAll(".message");
-         messages.forEach(function(message) {
-            message.remove();
+   document.addEventListener("click", function(event) {
+      // Check if the click was outside of any message box
+      if (!event.target.closest(".message-box")) {
+         // Remove all message box elements
+         var messageBoxes = document.querySelectorAll(".message-box");
+         messageBoxes.forEach(function(messageBox) {
+            messageBox.remove();
          });
       }
    });
@@ -26,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 <header class="header">
+    
     <div class="logo">
         <a href="#" class="logo-link">
             <img src="assets/img/bscs.png" alt="logo">

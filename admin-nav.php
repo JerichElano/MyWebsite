@@ -46,6 +46,35 @@
     }
 </style>
 
+<?php
+if(isset($_SESSION['messages'])){
+   foreach($_SESSION['messages'] as $message){
+      echo '
+      <div class="message-box">
+         <p>'.$message.'</p>
+      </div>
+      ';
+   }
+   unset($_SESSION['messages']);
+//    echo '<script>setTimeout(function() { window.location.href = "index.php"; }, 3000);</script>';
+}
+?>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+   document.addEventListener("click", function(event) {
+      // Check if the click was outside of any message box
+      if (!event.target.closest(".message-box")) {
+         // Remove all message box elements
+         var messageBoxes = document.querySelectorAll(".message-box");
+         messageBoxes.forEach(function(messageBox) {
+            messageBox.remove();
+         });
+      }
+   });
+});
+</script>
+
 <header class="header">
     <div class="logo">
         <a href="#" class="logo-link">

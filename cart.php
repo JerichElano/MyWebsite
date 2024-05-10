@@ -25,7 +25,7 @@ if(isset($_POST['update_quantity'])){
     $cart_id = $_POST['cart_id'];
     $cart_quantity = $_POST['cart_quantity'];
     mysqli_query($conn, "UPDATE `cart` SET quantity = '$cart_quantity' WHERE id = '$cart_id'") or die('query failed');
-    $message[] = 'cart quantity updated!';
+    $_SESSION['messages'][] = 'Cart quantity updated!';
 }
 
 ?>

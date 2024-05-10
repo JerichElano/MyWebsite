@@ -32,11 +32,11 @@ if(isset($_POST['update_product'])){
          mysqli_query($conn, "UPDATE `product` SET image = '$image' WHERE id = '$update_p_id'") or die('query failed');
          move_uploaded_file($image_tmp_name, $image_folter);
          unlink('assets/img/uploaded-img/'.$old_image);
-         $message[] = 'Image updated successfully!';
+         $_SESSION['messages'][] = 'Image updated successfully!';
       }
    }
 
-   $message[] = 'Product updated successfully!';
+   $_SESSION['messages'][] = 'Product updated successfully!';
 
 }
 
@@ -76,18 +76,6 @@ if(isset($_POST['update_product'])){
    <input type="number" min="0" class="box" value="<?php echo $fetch_products['price']; ?>" required placeholder="update product price" name="price">
    <textarea name="details" class="box" required placeholder="update product details" cols="30" rows="10"><?php echo $fetch_products['details']; ?></textarea>
    <input type="file" accept="image/jpg, image/jpeg, image/png" class="box" name="image">
-   <?php
-    if(isset($message)){
-    foreach($message as $message){
-        echo '
-        <div class="message">
-            <span>'.$message.'</span>
-            <i class="fas fa-times" onclick="this.parentElement.remove();"></i>
-        </div>
-        ';
-    }
-    }
-    ?>
    <input type="submit" value="update product" name="update_product" class="btn">
    <a href="admin-page.php#show-products" class="btn">go back</a>
 </form>

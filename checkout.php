@@ -45,16 +45,16 @@
         $order_query = mysqli_query($conn, "SELECT * FROM `orders` WHERE name = '$name' AND number = '$number' AND email = '$email' AND method = '$method' AND address = '$address' AND total_products = '$total_products' AND total_price = '$cart_total'") or die('query failed');
 
         if ($cart_total == 0){
-            $message[] = 'Your cart is empty!';
+            $_SESSION['messages'][] = 'Your cart is empty!';
         } elseif (mysqli_num_rows($order_query) > 0){
-            $message[] = 'Order placed already!';
+            $_SESSION['messages'][] = 'Order placed already!';
         } else {
             mysqli_query($conn, "INSERT INTO `orders`(account_id, name, number, email, method, address, total_products, total_price, placed_on) VALUES('$account_id', '$name', '$number', '$email', '$method', '$address', '$total_products', '$cart_total', '$placed_on')") or die('query failed');
             mysqli_query($conn, "DELETE FROM `cart` WHERE account_id = '$account_id'") or die('query failed');
-            $message[] = 'Order placed successfully!';
+            $_SESSION['messages'][] = 'Order placed successfully';
         }
 
-        header('location: index.php#recommended');
+        // header('location: index.php#recommended');
 
     } elseif (isset($_POST['order']) && isset($_SESSION['checker'])) {
         $name = mysqli_real_escape_string($conn, $_POST['name']);
@@ -71,11 +71,11 @@
         $order_query = mysqli_query($conn, "SELECT * FROM `orders` WHERE name = '$name' AND number = '$number' AND email = '$email' AND method = '$method' AND address = '$address' AND total_products = '$total_products' AND total_price = '$cart_total'") or die('query failed');
         
         if (mysqli_num_rows($order_query) > 0) {
-            $message[] = 'Order placed already!';
+            $_SESSION['messages'][] = 'Order placed already!';
         } else {
             mysqli_query($conn, "INSERT INTO `orders`(account_id, name, number, email, method, address, total_products, total_price, placed_on) VALUES('$account_id', '$name', '$number', '$email', '$method', '$address', '$total_products', '$cart_total', '$placed_on')") or die('query failed');
             mysqli_query($conn, "DELETE FROM `cart` WHERE account_id = '$account_id'") or die('query failed');
-            $message[] = 'Order placed successfully!';
+            $_SESSION['messages'][] = 'Order placed successfully';
         }
         
         unset($_SESSION['checker']);
@@ -85,7 +85,7 @@
         unset($_SESSION['product_image']);
         unset($_SESSION['product_quantity']);
 
-        header('location: index.php#recommended');
+        // header('location: index.php#recommended');
     }
 
 ?>

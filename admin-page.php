@@ -22,16 +22,16 @@
       $select_product_name = mysqli_query($conn, "SELECT name FROM `product` WHERE name = '$name'") or die('query failed');
 
       if (mysqli_num_rows($select_product_name) > 0) {
-         $message[] = 'Product name already exist!';
+         $_SESSION['messages'][] = 'Product name already exist!';
       } else {
          $insert_product = mysqli_query($conn, "INSERT INTO `product`(name, details, price, image) VALUES('$name', '$details', '$price', '$image')") or die('query failed');
 
          if ($insert_product) {
             if ($image_size > 2000000) {
-               $message[] = 'Image size is too large!';
+               $_SESSION['messages'][] = 'Image size is too large';
             } else {
                move_uploaded_file($image_tmp_name, $image_folter);
-               $message[] = 'Product added successfully!';
+               $_SESSION['messages'][] = 'Product added successfully!';
             }
          }
       }
@@ -52,7 +52,7 @@
       $order_id = $_POST['order_id'];
       $update_payment = $_POST['update_payment'];
       mysqli_query($conn, "UPDATE `orders` SET payment_status = '$update_payment' WHERE id = '$order_id'") or die('query failed');
-      $message[] = 'Payment status has been updated!';
+      $_SESSION['messages'][] = 'Payment status has been updated!';
    }
 
    if (isset($_GET['delete'])) {
@@ -85,7 +85,6 @@
       
       <?php include 'admin-nav.php'; ?>
 
-      <!-- put here the message that will appear using div ................................. -->
       <div class="admin-container">
          <section id="dashboard" class="dashboard">
             <video controls autoplay muted loop>
