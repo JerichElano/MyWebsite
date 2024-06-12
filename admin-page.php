@@ -27,12 +27,12 @@
          $insert_product = mysqli_query($conn, "INSERT INTO `product`(name, details, price, image) VALUES('$name', '$details', '$price', '$image')") or die('query failed');
 
          if ($insert_product) {
-            if ($image_size > 2000000) {
-               $_SESSION['messages'][] = 'Image size is too large';
-            } else {
+            // if ($image_size > 2000000) {
+            //    $_SESSION['messages'][] = 'Image size is too large';
+            // } else {
                move_uploaded_file($image_tmp_name, $image_folter);
                $_SESSION['messages'][] = 'Product added successfully!';
-            }
+            // }
          }
       }
 

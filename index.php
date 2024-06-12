@@ -12,9 +12,12 @@
         $_SESSION['product_price'] = $_POST['product_price'];
         $_SESSION['product_image'] = $_POST['product_image'];
         $_SESSION['product_quantity'] = $_POST['product_quantity'];
+        // $_SESSION['product_variant'] = $_POST['product_variant'];
+        // $_SESSION['product_color'] = $_POST['product_color'];
         $_SESSION['checker'] = "fromBuyNow";
 
         header('location:checkout.php');
+        exit; //remove this if error happens
 
     };
 
@@ -29,12 +32,16 @@
         $product_price = $_POST['product_price'];
         $product_image = $_POST['product_image'];
         $product_quantity = $_POST['product_quantity'];
+        // $product_variant = $_POST['product_variant'];
+        // $product_color = $_POST['product_color'];
 
+        // $check_cart_numbers = mysqli_query($conn, "SELECT * FROM `cart` WHERE name = '$product_name' AND account_id = '$account_id' AND variant = '$product_variant' AND color = '$product_color'") or die('query failed');
         $check_cart_numbers = mysqli_query($conn, "SELECT * FROM `cart` WHERE name = '$product_name' AND account_id = '$account_id'") or die('query failed');
 
         if (mysqli_num_rows($check_cart_numbers) > 0) {
             $_SESSION['messages'][] = 'Already added to cart';
         } else {
+            // mysqli_query($conn, "INSERT INTO `cart`(account_id, pid, name, price, quantity, variant, image) VALUES('$account_id', '$product_id', '$product_name', '$product_price', '$product_quantity', '$product_variant', '$product_color', '$product_image')") or die('query failed');
             mysqli_query($conn, "INSERT INTO `cart`(account_id, pid, name, price, quantity, image) VALUES('$account_id', '$product_id', '$product_name', '$product_price', '$product_quantity', '$product_image')") or die('query failed');
             $_SESSION['messages'][] = 'Product added to cart';
             header('Location: ' . $_SERVER['REQUEST_URI']);
@@ -51,7 +58,7 @@
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <title>Nexus</title>
 
-	    <link rel="icon" type="image/png" href="assets/img/bscs.png"/>
+	    <link rel="icon" type="image/png" href="./assets/img/bscs.png"/>
 
         <link rel="stylesheet" type="text/css" href="main.css">
     </head>
@@ -67,7 +74,7 @@
                 <div class="container">
                     <h2 class="">Welcome to <span style="color: #dd3157;">Nexus</span></h2>
                     <p>Your Portal to Infinite Connectivity</p>
-                    <a href="#brands" class="btn">Learn more</a>
+                    <a href="#recommended" class="btn">Buy now</a>
                 </div>
             </div>
             <div class="brand-list">
@@ -214,6 +221,28 @@
                         <input type="hidden" name="product_name" value="<?php echo $fetch_products['name']; ?>">
                         <input type="hidden" name="product_price" value="<?php echo $fetch_products['price']; ?>">
                         <input type="hidden" name="product_image" value="<?php echo $fetch_products['image']; ?>">
+                        <!-- <div class="variants">
+                            <label>
+                                <input type="radio" name="product_variant" value="64GB" class="variant-button" checked> 64GB
+                            </label>
+                            <label>
+                                <input type="radio" name="product_variant" value="128GB" class="variant-button"> 128GB
+                            </label>
+                        </div>
+                        <div class="colors">
+                            <label>
+                                <input type="radio" name="product_color" value="Black" checked> Black
+                            </label>
+                            <label>
+                                <input type="radio" name="product_color" value="White"> White
+                            </label>
+                            <label>
+                                <input type="radio" name="product_color" value="Blue"> Blue
+                            </label>
+                            <label>
+                                <input type="radio" name="product_color" value="Red"> Red
+                            </label>
+                        </div> -->
                         <input type="submit" value="buy now" name="buy_now" class="btn">
                         <input type="submit" value="add to cart" name="add_to_cart" class="btn">
                     </form>
@@ -248,5 +277,22 @@
                 </div>
             </div>
         </footer>
+
+        <!-- <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const buttons = document.querySelectorAll('.variant-button');
+                buttons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const variant = button.getAttribute('data-variant');
+                        const form = button.closest('form');
+                        const variantInput = form.querySelector('input[name="product_variant"]');
+                        const selectedVariant = form.querySelector('.selected-variant');
+
+                        variantInput.value = variant;
+                        selectedVariant.textContent = variant;
+                    });
+                });
+            });
+        </script> -->
     </body>
 </html>
