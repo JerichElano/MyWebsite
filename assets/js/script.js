@@ -16,3 +16,26 @@ window.onscroll = () =>{
     userBox.classList.remove('active');
     navbar.classList.remove('active');
 }
+
+// Featured phones auto play and pause
+var video = document.getElementById("specialBannerVideo");
+
+function checkVideoVisibility() {
+    var rect = video.getBoundingClientRect();
+    var windowHeight = window.innerHeight || document.documentElement.clientHeight;
+
+    if (rect.top <= windowHeight && rect.bottom >= 0.6 * windowHeight) {
+        video.play();
+    } else {
+        video.pause();
+    }
+}
+
+window.addEventListener("scroll", checkVideoVisibility);
+
+checkVideoVisibility();
+
+video.addEventListener("ended", function() {
+    video.currentTime = 0;
+    video.play();
+});
