@@ -53,7 +53,7 @@ body {
 }
 
 .logo img {
-    width: 1.5rem;
+    width: 2.8rem;
 }
 
 .logo a {
@@ -95,7 +95,7 @@ body {
 }
 
 .navmenu img {
-    width: 1.5rem;
+    width: 2.5rem;
     float: left;
     transition: filter 0.1s ease;
 }
@@ -131,12 +131,13 @@ body {
     text-align: center;
     display: block;
     margin: 5px auto !important;
-    background-color: rgb(255, 233, 233) !important;
+    background-color: var(--salmon) !important;
     transition: background-color 0.3s ease !important;
 }
 
 .account-box .btn:hover {
-    background-color: #ffa0b4 !important;
+    background-color: var(--bittersweet) !important;
+    color: var(--white);
 }
 /* End of Header */
 
@@ -693,7 +694,6 @@ body {
   body {
     background: var(--white);
     font-size: 1.3rem;
-    padding-block-start: 90px;
   }
   
   ::-webkit-scrollbar { width: 10px; }
@@ -736,14 +736,14 @@ body {
     text-transform: uppercase;
   }
   
-  .btn {
+  .nbtn {
     background: var(--background, var(--bittersweet));
     color: var(--color, var(--white));
     font-size: var(--fs-5);
     display: flex;
     align-items: center;
     gap: 5px;
-    padding: 14px 25px;
+    padding: 14px 30px !important;
     border: 1px solid var(--border-color, var(--bittersweet));
   }
   
@@ -933,7 +933,7 @@ body {
    * #HEADER
   \*-----------------------------------*/
   
-  .header {
+  /* .header {
     background: var(--black);
     position: fixed;
     top: 0;
@@ -942,7 +942,7 @@ body {
     height: 50px;
     transition: var(--transition-1);
     z-index: 4;
-  }
+  } */
   
   .header.active { box-shadow: 0 2px 10px #dd31571a; }
   

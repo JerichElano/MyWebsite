@@ -5,6 +5,10 @@
     session_start();
 
     $account_id = $_SESSION['account_id'];
+    $selected_products = $_SESSION['selected_products'];
+    $pids = implode(",", array_map('intval', $selected_products));
+
+
 
     if(isset($_SESSION['checker']) && isset($_SESSION['product_id']) && isset($_SESSION['product_name']) && isset($_SESSION['product_price']) && isset($_SESSION['product_image']) && isset($_SESSION['product_quantity'])) {
         $checker = $_SESSION['checker'];
@@ -15,10 +19,12 @@
         $product_quantity = $_SESSION['product_quantity'];
     }
 
+    //If there's no account logged in
     if(!isset($account_id)){
         header('location:login.php');
     };
 
+    //For placing order
     if (isset($_POST['order']) && !isset($_SESSION['checker'])){
         $name = mysqli_real_escape_string($conn, $_POST['name']);
         $number = mysqli_real_escape_string($conn, $_POST['number']);
@@ -30,7 +36,8 @@
         $cart_total = 0;
         $cart_products[] = '';
 
-        $cart_query = mysqli_query($conn, "SELECT * FROM `cart` WHERE account_id = '$account_id'") or die('query failed');
+
+        $cart_query = mysqli_query($conn, "SELECT * FROM `cart` WHERE pid IN ($pids) AND account_id = '$account_id'") or die('query failed');
         
         if (mysqli_num_rows($cart_query) > 0) {
             while ($cart_item = mysqli_fetch_assoc($cart_query)) {
@@ -50,7 +57,7 @@
             $_SESSION['messages'][] = 'Order placed already!';
         } else {
             mysqli_query($conn, "INSERT INTO `orders`(account_id, name, number, email, method, address, total_products, total_price, placed_on) VALUES('$account_id', '$name', '$number', '$email', '$method', '$address', '$total_products', '$cart_total', '$placed_on')") or die('query failed');
-            mysqli_query($conn, "DELETE FROM `cart` WHERE account_id = '$account_id'") or die('query failed');
+            mysqli_query($conn, "DELETE FROM `cart` WHERE pid IN ($pids) AND account_id = '$account_id'") or die('query failed');
             $_SESSION['messages'][] = 'Order placed successfully';
         }
 

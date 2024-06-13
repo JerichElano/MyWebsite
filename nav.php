@@ -37,8 +37,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
         <div class="navbar">
             <a href="index.php">Home</a>
-            <a href="index.php#brands">Smartphones</a>
-            <a href="index.php#recommended">Recommended</a>
+            <a href="index.php#Smartphones">Smartphones</a>
+            <a href="index.php#Featured">Featured</a>
         </div>
     </div>
     <div class="navmenu">
@@ -47,8 +47,8 @@ document.addEventListener("DOMContentLoaded", function() {
     </div>
     <div class="account-box" style="display: none;">
         <?php if (isset($_SESSION['user_name']) && isset($_SESSION['user_email'])) : ?>
-            <p>Username : <span><?php echo $_SESSION['user_name']; ?></span></p>
-            <p>Email : <span><?php echo $_SESSION['user_email']; ?></span></p>
+            <p>Username : <strong><?php echo $_SESSION['user_name']; ?></strong></p>
+            <p>Email : <strong><?php echo $_SESSION['user_email']; ?></strong></p>
             <a href="logout.php" class="btn">Logout</a>
         <?php else : ?>
             <p>Please log in to enjoy shopping</p>

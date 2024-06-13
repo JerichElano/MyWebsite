@@ -3,51 +3,88 @@
     @include 'config.php';
 
     session_start();
+    
+    // Initialize session messages array if not already initialized
+    if (!isset($_SESSION['messages'])) {
+        $_SESSION['messages'] = array();
+    }
+    
+    if (isset($_SESSION['account_id'])) {
 
-    $account_id = $_SESSION['account_id'];
+        $account_id = $_SESSION['account_id'];
 
-    if (isset($_POST['buy_now'])) {
-        $_SESSION['product_id'] = $_POST['product_id'];
-        $_SESSION['product_name'] = $_POST['product_name'];
-        $_SESSION['product_price'] = $_POST['product_price'];
-        $_SESSION['product_image'] = $_POST['product_image'];
-        $_SESSION['product_quantity'] = $_POST['product_quantity'];
-        // $_SESSION['product_variant'] = $_POST['product_variant'];
-        // $_SESSION['product_color'] = $_POST['product_color'];
-        $_SESSION['checker'] = "fromBuyNow";
-
-        header('location:checkout.php');
-        exit; //remove this if error happens
-
-    };
-
-    if (isset($_POST['add_to_cart'])) {
-        if (!isset($account_id)) {
-            header('location:login.php');
+        if (isset($_POST['buy_now'])) {
+            $_SESSION['product_id'] = $_POST['product_id'];
+            $_SESSION['product_name'] = $_POST['product_name'];
+            $_SESSION['product_price'] = $_POST['product_price'];
+            $_SESSION['product_image'] = $_POST['product_image'];
+            $_SESSION['product_quantity'] = $_POST['product_quantity'];
+            // $_SESSION['product_variant'] = $_POST['product_variant'];
+            // $_SESSION['product_color'] = $_POST['product_color'];
+            $_SESSION['checker'] = "fromBuyNow";
+    
+            header('location:checkout.php');
             exit;
+    
+        };
+    
+        if (isset($_POST['add_to_cart'])) {
+            
+            if (!isset($account_id)) {
+                header('Location: login.php');
+                exit;
+            }
+            
+            $product_id = $_POST['product_id'];
+            $product_name = $_POST['product_name'];
+            $product_price = $_POST['product_price'];
+            $product_image = $_POST['product_image'];
+            $product_quantity = $_POST['product_quantity'];
+            // $product_variant = $_POST['product_variant'];
+            // $product_color = $_POST['product_color'];
+            
+            $check_cart_numbers = mysqli_query($conn, "SELECT * FROM `cart` WHERE name = '$product_name' AND account_id = '$account_id'") or die('Query failed');
+            
+            if (mysqli_num_rows($check_cart_numbers) > 0) {
+            
+                $_SESSION['messages'][] = 'Already added to cart';
+            
+                // Use prepared statements to prevent SQL injection
+                $stmt = $conn->prepare("UPDATE `cart` SET quantity = quantity + ? WHERE name = ? AND account_id = ?");
+                $increment = 1;
+                $stmt->bind_param('isi', $increment, $product_name, $account_id);
+            
+                if ($stmt->execute()) {
+                    $_SESSION['messages'][] = 'Quantity incremented in cart';
+                } else {
+                    die('Query failed: ' . $stmt->error);
+                }
+            
+                $stmt->close();
+            } else {
+                // Use prepared statements for the insert query
+                $stmt = $conn->prepare("INSERT INTO `cart` (account_id, pid, name, price, quantity, image) VALUES (?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param('sissis', $account_id, $product_id, $product_name, $product_price, $product_quantity, $product_image);
+            
+                if ($stmt->execute()) {
+                    $_SESSION['messages'][] = 'Product added to cart';
+                } else {
+                    die('Query failed: ' . $stmt->error);
+                }
+            
+                $stmt->close();
+                
+                // Redirect to the same page to avoid form resubmission
+                header('Location: ' . $_SERVER['REQUEST_URI']);
+                exit;
+            }
+    
         }
-
-        $product_id = $_POST['product_id'];
-        $product_name = $_POST['product_name'];
-        $product_price = $_POST['product_price'];
-        $product_image = $_POST['product_image'];
-        $product_quantity = $_POST['product_quantity'];
-        // $product_variant = $_POST['product_variant'];
-        // $product_color = $_POST['product_color'];
-
-        // $check_cart_numbers = mysqli_query($conn, "SELECT * FROM `cart` WHERE name = '$product_name' AND account_id = '$account_id' AND variant = '$product_variant' AND color = '$product_color'") or die('query failed');
-        $check_cart_numbers = mysqli_query($conn, "SELECT * FROM `cart` WHERE name = '$product_name' AND account_id = '$account_id'") or die('query failed');
-
-        if (mysqli_num_rows($check_cart_numbers) > 0) {
-            $_SESSION['messages'][] = 'Already added to cart';
-        } else {
-            // mysqli_query($conn, "INSERT INTO `cart`(account_id, pid, name, price, quantity, variant, image) VALUES('$account_id', '$product_id', '$product_name', '$product_price', '$product_quantity', '$product_variant', '$product_color', '$product_image')") or die('query failed');
-            mysqli_query($conn, "INSERT INTO `cart`(account_id, pid, name, price, quantity, image) VALUES('$account_id', '$product_id', '$product_name', '$product_price', '$product_quantity', '$product_image')") or die('query failed');
-            $_SESSION['messages'][] = 'Product added to cart';
-            header('Location: ' . $_SERVER['REQUEST_URI']);
-            exit;
+    } else {
+        if (isset($_POST['add_to_cart']) || isset($_POST['buy_now'])) {
+        header('Location: login.php');
+        exit;
         }
-
     }
 
 ?>
@@ -72,9 +109,9 @@
                     Your browser does not support the video tag.
                 </video>
                 <div class="container">
-                    <h2 class="">Welcome to <span style="color: #dd3157;">Nexus</span></h2>
+                    <h2 class="">Welcome to <strong style="color: #dd3157;">Nexus</strong></h2>
                     <p>Your Portal to Infinite Connectivity</p>
-                    <a href="#recommended" class="btn">Buy now</a>
+                    <a href="#recommended" class="btn nbtn btn-link">Buy now</a>
                 </div>
             </div>
             
@@ -165,10 +202,10 @@
                 <ul class="collection-list has-scrollbar">
 
                     <li>
-                    <div class="collection-card" style="background-image: url('./assets/img/phones/phone11.jpg')">
+                    <div class="collection-card" style="background-image: url('./assets/img/phones/cta/p1.png')">
                         <h3 class="h4 card-title">Budget Smartphones</h3>
 
-                        <a href="#" class="btn btn-secondary">
+                        <a href="#" class="btn nbtn btn-secondary">
                         <span>Explore All</span>
 
                         <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
@@ -177,10 +214,10 @@
                     </li>
 
                     <li>
-                    <div class="collection-card" style="background-image: url('./assets/img/phones/phone16.jpg')">
+                    <div class="collection-card" style="background-image: url('./assets/img/phones/cta/p3.png')">
                         <h3 class="h4 card-title">Flagship Smartphones</h3>
 
-                        <a href="#" class="btn btn-secondary">
+                        <a href="#" class="btn nbtn btn-secondary">
                         <span>Explore All</span>
 
                         <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
@@ -189,10 +226,10 @@
                     </li>
 
                     <li>
-                    <div class="collection-card" style="background-image: url('./assets/img/phones/phone14.jpg')">
+                    <div class="collection-card" style="background-image: url('./assets/img/phones/cta/p2.png')">
                         <h3 class="h4 card-title">Gaming Smartphones</h3>
 
-                        <a href="#" class="btn btn-secondary">
+                        <a href="#" class="btn nbtn btn-secondary">
                         <span>Explore All</span>
 
                         <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
@@ -254,11 +291,12 @@
                             <img src="assets/img/brands/brand7.png" alt="Realme Logo">
                         </div>
                     </div>
+                    <div id="Smartphones"></div>
                 </div>
             </div>
 
             <!-- Products -->
-
+            
             <section class="section product">
                 <div class="container">
 
@@ -328,14 +366,15 @@
                                                     </button>
                                                     <div class="card-action-tooltip" id="card-label-2">Buy Now</div>
                                                 </li>
+                                                
+                                                <li class="card-action-item">
+                                                    <a href="view_page.php?pid=<?php echo $fetch_products['id']; ?>" class="card-action-btn" aria-labelledby="card-label-3">
+                                                        <ion-icon name="eye-outline"></ion-icon>
+                                                    </a>
+                                                    <div class="card-action-tooltip" id="card-label-3">Quick View</div>
+                                                </li>
                                             </form>
 
-                                            <li class="card-action-item">
-                                                <a href="view_page.php?pid=<?php echo $fetch_products['id']; ?>" class="card-action-btn" aria-labelledby="card-label-3">
-                                                    <ion-icon name="eye-outline"></ion-icon>
-                                                </a>
-                                                <div class="card-action-tooltip" id="card-label-3">Quick View</div>
-                                            </li>
                                         </ul>
                                     </figure>
 
@@ -381,7 +420,7 @@
 
                             <h3 class="h2 card-title">The Summer Sale Off 50%</h3>
 
-                            <a href="#" class="btn btn-link">
+                            <a href="#" class="btn nbtn btn-link">
                             <span>Shop Now</span>
 
                             <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
@@ -395,7 +434,7 @@
 
                             <h3 class="h2 card-title">Makes Yourself Keep Sporty</h3>
 
-                            <a href="#" class="btn btn-link">
+                            <a href="#" class="btn nbtn btn-link">
                             <span>Shop Now</span>
 
                             <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
@@ -406,6 +445,7 @@
                     </ul>
 
                 </div>
+                <div id="Featured"></div>
             </section>
 
 
@@ -420,7 +460,7 @@
                             <source src="./assets/vid/Featured.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
-                        <a href="#" class="btn btn-link">
+                        <a href="#" class="btn nbtn btn-link">
                             <span>Explore All</span>
                             <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
                         </a>
