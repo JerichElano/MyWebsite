@@ -16,6 +16,7 @@ body {
 }
   
 .btn {
+  background-color: var(--salmon);
     text-decoration: none;
     color: var(--default-color);
     font-weight: 400;
@@ -663,7 +664,8 @@ body {
   
   a,
   img,
-  span,
+  .main span,
+  .footer span,
   table,
   tbody,
   button,
@@ -1982,20 +1984,56 @@ body {
 /* End of Footer */
 /* End of Main */
 /* Cart */
+.bg-container {
+  min-height: 900px;
+  padding-bottom: 130px;
+}
+.quantity-container input.qty,
+.quantity-container input.btn {
+  padding-left: 20px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.quantity-container {
+  margin: 6px 15px;
+  width: 110px;
+  white-space: nowrap;
+  border-radius: 15px;
+  border: 2px solid black;
+}
+
+.quantity-container input.btn{
+  margin: 0 0 0 10px;
+  padding: 0 80px 0 30px;
+  background-color: var(--salmon);
+}
+
+.quantity-container input.btn:hover {
+  background-color: var(--bittersweet);
+  color: var(--white);
+}
+
+.shopping-cart .product-item {
+  background-color: var(--white);
+}
+
 .heading,
 .shopping-cart{
     text-align: center;
 }
 
 .heading {
-    padding-top: 80px;
-    margin-bottom: 20px;
+    padding-top: 60px;
     font-size: 30px;
+      margin-bottom: 7px;
+      font-size: 30px;
+      color: white;
 }
 
-.title {
+.shopping-cart .title {
     color: white;
-    margin: 20px 0;
+    padding-bottom: 20px;
 }
 
 .shopping-cart .box-container{
@@ -2007,6 +2045,77 @@ body {
     gap:1.5rem;
     align-items: flex-start;
     justify-content: center;
+}
+
+.checkbox{
+    position: absolute;
+    top: 12px;
+    left: 10px;
+    cursor: pointer;
+	width: 100%;
+	display:flex;
+	align-items: center;
+	justify-content: flex-end;
+	flex-direction: row-reverse;
+	margin: 10px;
+	font-size: 14px;
+	cursor: pointer;
+}
+.checkbox input{
+	display:none;
+	width: 0;
+	height: 0;
+}
+.checkbox span{
+	width: 27px;
+	height: 27px;
+	position: relative;
+	margin-right: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 20%;
+	background-color: #bdbdbd;
+}
+.checkbox input:checked + span:after{
+	content: "\2713";
+	display: block;
+	width: 17px;
+	height: 27px;
+	font-size: 20px;
+	color: #ffffff;
+}
+.checkbox input:checked + span {
+	background-color: var(--bittersweet);
+}
+.checkbox input:disabled + span {
+	background-color: #e5e5e5;
+}
+.checkbox span:before{
+	position: absolute;
+	content: "";
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	border-radius: 20%;
+	background-color: var(--bittersweet);
+}
+.checkbox input:checked + span:before {
+	animation: growAndFade 0.8s ease-out;
+} 
+@keyframes growAndFade {
+	0% {
+		opacity: 1;
+		transform: scale(1);
+	}
+	50% {
+		opacity: 0.5;
+		transform: scale(1.5);
+	}
+	100% {
+		opacity: 0;
+		transform: scale(2);
+	}
 }
 
 .shopping-cart .box-container .box{
@@ -2070,16 +2179,18 @@ body {
 }
 
 .shopping-cart .box-container .box .qty{
-    width: 9rem;
-    padding: .4rem 1.2rem;
+    width: 0rem;
+    padding: .4rem 0rem;
     border-radius: .5rem;
     border:var(--border);
     font-size: 1.3rem;
+    background-color: var(--bittersweet);
 }
 
-.shopping-cart .box-container .box .sub-total{
+.shopping-cart .container .sub-total{
     margin-top: 1.5rem;
-    font-size: 1.8rem;
+    padding-bottom: 1.5rem;
+    font-size: 2rem;
     color:var(--light-color);
 }
 
@@ -2090,7 +2201,7 @@ body {
 .shopping-cart .cart-total{
     max-width: 1200px;
     margin:0 auto;
-    padding:2rem;
+    padding: 12px 2rem 10px 2rem;
     text-align: center;
     background-color: var(--white);
     border:var(--border);
@@ -2099,30 +2210,42 @@ body {
     margin-top: 2rem;
 }
 
-.shopping-cart .more-btn a,
+.shopping-cart .more-btn button {
+  margin: 30px 20px 0px 20px;
+}
+
+.shopping-cart .more-btn button:hover {
+  color: black;
+}
+
+.shopping-cart .more-btn button {
+    color: var(--white)
+}
 .shopping-cart .cart-total {
-    color: white;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+    color: black  ;
+    width: 1000px;
+    border-radius: 15px;
+    bottom: 0;
 }
 
 .shopping-cart .cart-total p{
     font-size: 2rem;
-    margin-bottom: 1rem;
+    margin-bottom: .5rem;
 }
-
-.shopping-cart .cart-total p span{
-    color:var(--red);
+.shopping-cart .cart-total button{
+  padding: 8px 60px;
+  margin: 10px 20px 0px 20px;
+}
+.shopping-cart .cart-total button:hover {
+  color: var(--white);
 }
 /* End of Cart */
 
-/* Checkout */   
-.heading {
-    text-align: center;
-    padding-top: 80px;
-    margin-bottom: 20px;
-    font-size: 30px;
-    color: white;
-}
-
+/* Checkout */  
 .display-order{
     max-width: 1200px;
     margin:0 auto;
@@ -2244,14 +2367,65 @@ body {
     text-align: center;
 }
 
+.admin-container .dashboard h3,
+.admin-container .dashboard p{
+  font-size: 12px !important;
+}
+
 .admin-container h3{
     font-size: 2rem;
     text-transform: uppercase;
     color:var(--black);
     margin-bottom: 1rem;
  }
+
+.admin-container .product-card {
+  background-color: var(--white);
+}
+
+.admin-container .card-banner {
+  height: 200px;
+}
+
+.admin-container .card-content h3 {
+  margin: 0px;
+  display: inline-block;
+  max-width: 150px; 
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.admin-container .card-content p {
+  margin: 5px;
+}
+
+.admin-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px; 
+  padding-bottom: 10px;
+}
+
+.admin-actions .btn {
+  font-size: 13px;
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: var(--salmon);
+  text-decoration: none;
+  border-radius: 15px;
+  text-align: center;
+  margin: 0 0 10px 0 !important;
+}
+
+.admin-actions .btn:hover {
+  background-color: var(--bittersweet);
+  color: var(--white) !important;
+}
+
+
 /* Button */
-.admin-container .btn {
+/* .admin-container .btn {
     background-color: rgb(255, 233, 233);
     text-decoration: none;
     color: var(--default-color);
@@ -2270,7 +2444,7 @@ body {
     color: var(--contrast-color);
     background: #db6d85;
     border-color: var(--accent-color);
-}
+} */
 /* End of Button */
 
 .dashboard .logo-name {

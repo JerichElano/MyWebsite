@@ -380,8 +380,8 @@
 
                                     <div class="card-content">
                                         <div class="card-cat">
-                                            <a href="#" class="card-cat-link">Men</a> /
-                                            <a href="#" class="card-cat-link">Women</a>
+                                            <a href="#" class="card-cat-link">64GB</a> /
+                                            <a href="#" class="card-cat-link">128GB</a>
                                         </div>
 
                                         <h3 class="h3 card-title">

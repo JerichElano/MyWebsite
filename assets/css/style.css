@@ -25,6 +25,27 @@
 /*//////////////////////////////////////////////////////////////////
 [ RESTYLE TAG ]*/
 
+:root {
+
+  /**
+   * colors
+   */
+
+  --maximum-blue-green_10: hsla(0, 100%, 95%, 0.1);
+  --rich-black-fogra-29: hsl(217, 28%, 9%);
+  --gray-x-11-gray: hsl(0, 0%, 74%);
+  --oxford-blue_60: hsla(230, 41%, 14%, 0.6);
+  --bittersweet: #dd3157;
+  --smoky-black: rgb(7, 6, 1);
+  --gainsboro: hsl(0, 0%, 88%);
+  --black_90: hsla(0, 0%, 0%, 0.9);
+  --cultured: hsl(200, 12%, 95%);
+  --salmon: #ff4b72;
+  --white: hsl(0, 0%, 100%);
+  --black: hsl(0, 0%, 0%);
+  --onyx: hsl(0, 0%, 27%);
+}
+
 * {
 	margin: 0px; 
 	padding: 0px; 
@@ -205,7 +226,7 @@ body{
 }
 
 .container button{
-    background-color: #512da8;
+    background-color: var(--salmon);
     color: #fff;
     border: 1px solid transparent;
     border-radius: 8px;
@@ -303,7 +324,7 @@ body{
 }
 
 .toggle{
-    background-color: #512da8;
+    background-color: var(--salmon);
     background: linear-gradient(-45deg, #75CAFF, #000000, #d24444, #F4B1E8);
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
@@ -428,13 +449,14 @@ body{
 
 .sign-up .login-form-btn:hover, 
 .sign-in .login-form-btn:hover {
-  background-color: #d24444;
+  background-color: var(--salmon);
+  color: var(--white);
 }
 
 .toggle-container button,
 body .container-back-btn button {
   font-family: Montserrat;
-  box-shadow: inset 0 0 0 0 #8254d6;
+  box-shadow: inset 0 0 0 0 var(--salmon);
   color: #ffffff;
   margin: 0 -.25rem;
   font-size: 12px;
@@ -444,6 +466,6 @@ body .container-back-btn button {
 
 .toggle-container button:hover,
 body .container-back-btn button:hover {
-  box-shadow: inset 150px 0 0 0 #8254d6;
-  color: rgb(209, 209, 209);
+  box-shadow: inset 150px 0 0 0 var(--salmon);
+  color: var(--black);
 }

@@ -68,6 +68,39 @@ if(isset($_POST['update_product'])){
       while($fetch_products = mysqli_fetch_assoc($select_products)){
 ?>
 
+<!-- <li class="product-item">
+    <div class="product-card" tabindex="0">
+        <form action="" method="post" enctype="multipart/form-data">
+            <figure class="card-banner">
+                <img src="assets/img/uploaded-img/<?php echo $fetch_products['image']; ?>" width="312" height="350" loading="lazy" alt="Product Image" class="image-contain">
+            </figure>
+
+            <div class="card-content">
+                <h3 class="h3 card-title">
+                    <input type="text" class="box" value="<?php echo $fetch_products['name']; ?>" required placeholder="update product name" name="name">
+                </h3>
+
+                <p class="card-price">
+                    <input type="number" min="0" class="box" value="<?php echo $fetch_products['price']; ?>" required placeholder="update product price" name="price">
+                </p>
+                
+                <div class="card-cat">
+                    <textarea name="details" class="box" required placeholder="update product details" cols="30" rows="10"><?php echo $fetch_products['details']; ?></textarea>
+                </div>
+            </div>
+
+            <div class="admin-actions">
+                <input type="hidden" value="<?php echo $fetch_products['id']; ?>" name="update_p_id">
+                <input type="hidden" value="<?php echo $fetch_products['image']; ?>" name="update_p_image">
+                <input type="file" accept="image/jpg, image/jpeg, image/png" class="box" name="image">
+                <input type="submit" value="update product" name="update_product" class="btn">
+                <a href="admin-page.php#show-products" class="btn">go back</a>
+            </div>
+        </form>
+    </div>
+</li> -->
+
+
 <form action="" method="post" enctype="multipart/form-data">
    <img src="assets/img/uploaded-img/<?php echo $fetch_products['image']; ?>" class="image"  alt="">
    <input type="hidden" value="<?php echo $fetch_products['id']; ?>" name="update_p_id">

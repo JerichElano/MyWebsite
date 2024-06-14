@@ -180,14 +180,33 @@
                   if (mysqli_num_rows($select_products) > 0) {
                      while ($fetch_products = mysqli_fetch_assoc($select_products)) {
                ?>
-                        <div class="box">
-                           <div class="price">P<?php echo $fetch_products['price']; ?></div>
-                           <img class="image" src="assets/img/uploaded-img/<?php echo $fetch_products['image']; ?>" alt="">
-                           <div class="name"><?php echo $fetch_products['name']; ?></div>
-                           <div class="details"><?php echo $fetch_products['details']; ?></div>
-                           <a href="admin-update-product.php?update=<?php echo $fetch_products['id']; ?>" class="btn">Update</a>
-                           <a href="admin-page.php?delete=<?php echo $fetch_products['id']; ?>" class="btn" onclick="return confirm('Delete this product?');">Delete</a>
-                        </div>
+                        <li class="product-item">
+    <div class="product-card" tabindex="0">
+
+        <figure class="card-banner">
+            <img src="assets/img/uploaded-img/<?php echo $fetch_products['image']; ?>" width="312" height="350" loading="lazy" alt="Product Image" class="image-contain">
+        </figure>
+
+        <div class="card-content">
+            <h3 class="h3 card-title">
+                <a href="#"><?php echo $fetch_products['name']; ?></a>
+            </h3>
+
+            <p class="card-price">P<?php echo $fetch_products['price']; ?></p>
+            
+            <div class="card-cat">
+                <a href="#" class="card-cat-link"><?php echo $fetch_products['details']; ?></a>
+            </div>
+        </div>
+
+        <div class="admin-actions">
+            <a href="admin-update-product.php?update=<?php echo $fetch_products['id']; ?>" class="btn">Update</a>
+            <a href="admin-page.php?delete=<?php echo $fetch_products['id']; ?>" class="btn" onclick="return confirm('Delete this product?');">Delete</a>
+        </div>
+
+    </div>
+</li>
+
                         <?php
                      }
                   } else {
