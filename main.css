@@ -1455,6 +1455,8 @@ body {
   }
 
   .newsletter-form .btn-primary {
+    background: var(--salmon);
+    border-radius: 0 10px 10px 0;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -1466,7 +1468,7 @@ body {
   }
 
   .newsletter-form .btn-primary:hover {
-    border-radius: 10px;
+    border-radius: 0 10px 10px 0;
     background-color: var(--bittersweet);
     color: var(--white);
   }
@@ -2363,6 +2365,12 @@ body {
 /* End of User */
 /* Admin */
 /* Admin Page */
+.header .account-box .reg {
+  display: inline;
+  text-decoration: none; 
+  color: red;
+}
+
 .admin-container { 
     text-align: center;
 }

@@ -14,6 +14,7 @@
         $account_id = $_SESSION['account_id'];
 
         if (isset($_POST['buy_now'])) {
+
             $_SESSION['product_id'] = $_POST['product_id'];
             $_SESSION['product_name'] = $_POST['product_name'];
             $_SESSION['product_price'] = $_POST['product_price'];
@@ -21,7 +22,7 @@
             $_SESSION['product_quantity'] = $_POST['product_quantity'];
             // $_SESSION['product_variant'] = $_POST['product_variant'];
             // $_SESSION['product_color'] = $_POST['product_color'];
-            $_SESSION['checker'] = "fromBuyNow";
+            $_SESSION['checker'] = $_POST['product_id'];
     
             header('location:checkout.php');
             exit;
@@ -98,6 +99,8 @@
 	    <link rel="icon" type="image/png" href="./assets/img/bscs.png"/>
 
         <link rel="stylesheet" type="text/css" href="main.css">
+        <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous"> -->
+
     </head>
     <body>
         <?php include ('nav.php'); ?>
@@ -111,7 +114,7 @@
                 <div class="container">
                     <h2 class="">Welcome to <strong style="color: #dd3157;">Nexus</strong></h2>
                     <p>Your Portal to Infinite Connectivity</p>
-                    <a href="#recommended" class="btn nbtn btn-link">Buy now</a>
+                    <a href="#Smartphones" class="btn nbtn btn-link"><ion-icon name="arrow-down"></ion-icon>Buy now</a>
                 </div>
             </div>
             
@@ -205,7 +208,7 @@
                     <div class="collection-card" style="background-image: url('./assets/img/phones/cta/p1.png')">
                         <h3 class="h4 card-title">Budget Smartphones</h3>
 
-                        <a href="#" class="btn nbtn btn-secondary">
+                        <a href="fitForYou.php" class="btn nbtn btn-secondary">
                         <span>Explore All</span>
 
                         <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
@@ -217,7 +220,7 @@
                     <div class="collection-card" style="background-image: url('./assets/img/phones/cta/p3.png')">
                         <h3 class="h4 card-title">Flagship Smartphones</h3>
 
-                        <a href="#" class="btn nbtn btn-secondary">
+                        <a href="fitForYou.php" class="btn nbtn btn-secondary">
                         <span>Explore All</span>
 
                         <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
@@ -229,7 +232,7 @@
                     <div class="collection-card" style="background-image: url('./assets/img/phones/cta/p2.png')">
                         <h3 class="h4 card-title">Gaming Smartphones</h3>
 
-                        <a href="#" class="btn nbtn btn-secondary">
+                        <a href="fitForYou.php" class="btn nbtn btn-secondary">
                         <span>Explore All</span>
 
                         <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
@@ -305,27 +308,23 @@
                     <ul class="filter-list">
 
                         <li>
-                            <button class="filter-btn  active">All</button>
+                            <button data-name="all" class="filter-btn  active">All</button>
                         </li>
 
                         <li>
-                            <button class="filter-btn">Samsung</button>
+                            <button data-name="samsung" class="filter-btn">Samsung</button>
                         </li>
 
                         <li>
-                            <button class="filter-btn">Apple</button>
+                            <button data-name="apple" class="filter-btn">Apple</button>
                         </li>
 
                         <li>
-                            <button class="filter-btn">Redmi</button>
+                            <button data-name="redmi" class="filter-btn">Redmi</button>
                         </li>
 
                         <li>
-                            <button class="filter-btn">Oppo</button>
-                        </li>
-
-                        <li>
-                            <button class="filter-btn">Cherry</button>
+                            <button data-name="oppo" class="filter-btn">Oppo</button>
                         </li>
 
                     </ul>
@@ -337,14 +336,12 @@
                                 while ($fetch_products = mysqli_fetch_assoc($select_products)) {
                         ?>
                         
-                            <li class="product-item">
+                        <li class="product-item" data-category="<?php echo strtolower($fetch_products['category']); ?>">
                                 <div class="product-card" tabindex="0">
 
                                     <figure class="card-banner">
                                         <img src="./assets/img/uploaded-img/<?php echo $fetch_products['image']; ?>" width="312" height="350" loading="lazy" alt="Product Image" class="image-contain">
-
                                         <div class="card-badge">New</div>
-
                                         <ul class="card-action-list">
                                             <form action="" method="POST" class="card-action-form">
                                                 <input type="hidden" name="product_id" value="<?php echo $fetch_products['id']; ?>">
@@ -357,6 +354,7 @@
                                                     <button type="submit" name="add_to_cart" class="card-action-btn" aria-labelledby="card-label-1">
                                                         <ion-icon name="cart-outline"></ion-icon>
                                                     </button>
+
                                                     <div class="card-action-tooltip" id="card-label-1">Add to Cart</div>
                                                 </li>
 
@@ -364,34 +362,34 @@
                                                     <button type="submit" name="buy_now" class="card-action-btn" aria-labelledby="card-label-2">
                                                         <ion-icon name="heart-outline"></ion-icon>
                                                     </button>
+
                                                     <div class="card-action-tooltip" id="card-label-2">Buy Now</div>
                                                 </li>
-                                                
+
                                                 <li class="card-action-item">
-                                                    <a href="view_page.php?pid=<?php echo $fetch_products['id']; ?>" class="card-action-btn" aria-labelledby="card-label-3">
+                                                    <a href="productDetail.php?pid=<?php echo $fetch_products['id']; ?>" class="card-action-btn" aria-labelledby="card-label-3">
                                                         <ion-icon name="eye-outline"></ion-icon>
                                                     </a>
+
                                                     <div class="card-action-tooltip" id="card-label-3">Quick View</div>
                                                 </li>
                                             </form>
-
                                         </ul>
                                     </figure>
 
-                                    <div class="card-content">
-                                        <div class="card-cat">
-                                            <a href="#" class="card-cat-link">64GB</a> /
-                                            <a href="#" class="card-cat-link">128GB</a>
-                                        </div>
-
-                                        <h3 class="h3 card-title">
-                                            <a href="#"><?php echo $fetch_products['name']; ?></a>
-                                        </h3>
-
-                                        <data class="card-price" value="<?php echo $fetch_products['price']; ?>">P<?php echo $fetch_products['price']; ?></data>
+                                <div class="card-content">
+                                    <div class="card-cat">
+                                        <a href="#" class="card-cat-link">64GB</a> /
+                                        <a href="#" class="card-cat-link">128GB</a>
                                     </div>
+                                    <h3 class="h3 card-title">
+                                        <a href="#"><?php echo $fetch_products['name']; ?></a>
+                                    </h3>
+                                    <data class="card-price" value="<?php echo $fetch_products['price']; ?>">P <?php echo $fetch_products['price']; ?></data>
                                 </div>
-                            </li>
+                            </div>
+                        </li>
+
 
 
                         <?php
@@ -420,7 +418,7 @@
 
                             <h3 class="h2 card-title">The Summer Sale Off 50%</h3>
 
-                            <a href="#" class="btn nbtn btn-link">
+                            <a href="fitForYou.php" class="btn nbtn btn-link">
                             <span>Shop Now</span>
 
                             <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
@@ -434,7 +432,7 @@
 
                             <h3 class="h2 card-title">Makes Yourself Keep Sporty</h3>
 
-                            <a href="#" class="btn nbtn btn-link">
+                            <a href="fitForYou.php" class="btn nbtn btn-link">
                             <span>Shop Now</span>
 
                             <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
@@ -460,7 +458,7 @@
                             <source src="./assets/vid/Featured.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
-                        <a href="#" class="btn nbtn btn-link">
+                        <a href="fitForYou.php" class="btn nbtn btn-link">
                             <span>Explore All</span>
                             <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
                         </a>
@@ -475,224 +473,78 @@
                         </h2>
 
                         <ul class="has-scrollbar">
+                            <?php
+                                $select_products = mysqli_query($conn, "SELECT * FROM `product` WHERE featured = 'featured' LIMIT 5") or die('query failed');
+                                if (mysqli_num_rows($select_products) > 0) {
+                                    while ($fetch_products = mysqli_fetch_assoc($select_products)) {
+                            ?>
 
                             <li class="product-item">
                                 <div class="product-card" tabindex="0">
 
-                                <figure class="card-banner">
-                                    <img src="./assets/img/featured/iphone_15_pro.png" width="312" height="350" loading="lazy"
-                                    alt="Running Sneaker Shoes" class="image-contain">
+                                    <figure class="card-banner">
+                                    <img src="./assets/img/uploaded-img/<?php echo $fetch_products['image']; ?>" width="312" height="350" loading="lazy" alt="Product Image" class="image-contain">
 
-                                    <div class="card-badge">New</div>
+                                        <ul class="card-action-list">
 
-                                    <ul class="card-action-list">
+                                            <form action="" method="POST" class="card-action-form">
+                                                <input type="hidden" name="product_id" value="<?php echo $fetch_products['id']; ?>">
+                                                <input type="hidden" name="product_name" value="<?php echo $fetch_products['name']; ?>">
+                                                <input type="hidden" name="product_price" value="<?php echo $fetch_products['price']; ?>">
+                                                <input type="hidden" name="product_image" value="<?php echo $fetch_products['image']; ?>">
+                                                <input type="hidden" name="product_quantity" value="1">
 
-                                    <li class="card-action-item">
-                                        <button class="card-action-btn" aria-labelledby="card-label-1">
-                                        <ion-icon name="cart-outline"></ion-icon>
-                                        </button>
+                                                <li class="card-action-item">
+                                                    <button type="submit" name="add_to_cart" class="card-action-btn" aria-labelledby="card-label-1">
+                                                        <ion-icon name="cart-outline"></ion-icon>
+                                                    </button>
 
-                                        <div class="card-action-tooltip" id="card-label-1">Add to Cart</div>
-                                    </li>
+                                                    <div class="card-action-tooltip" id="card-label-1">Add to Cart</div>
+                                                </li>
 
-                                    <li class="card-action-item">
-                                        <button class="card-action-btn" aria-labelledby="card-label-2">
-                                        <ion-icon name="heart-outline"></ion-icon>
-                                        </button>
+                                                <li class="card-action-item">
+                                                    <button type="submit" name="buy_now" class="card-action-btn" aria-labelledby="card-label-2">
+                                                        <ion-icon name="heart-outline"></ion-icon>
+                                                    </button>
 
-                                        <div class="card-action-tooltip" id="card-label-2">Buy Now</div>
-                                    </li>
+                                                    <div class="card-action-tooltip" id="card-label-2">Buy Now</div>
+                                                </li>
 
-                                    <li class="card-action-item">
-                                        <button class="card-action-btn" aria-labelledby="card-label-3">
-                                        <ion-icon name="eye-outline"></ion-icon>
-                                        </button>
+                                                <li class="card-action-item">
+                                                    <a href="productDetail.php?pid=<?php echo $fetch_products['id']; ?>" class="card-action-btn" aria-labelledby="card-label-3">
+                                                        <ion-icon name="eye-outline"></ion-icon>
+                                                    </a>
 
-                                        <div class="card-action-tooltip" id="card-label-3">Quick View</div>
-                                    </li>
+                                                    <div class="card-action-tooltip" id="card-label-3">Quick View</div>
+                                                </li>
+                                            </form>
 
-                                    </ul>
-                                </figure>
+                                        </ul>
+                                    </figure>
 
-                                <div class="card-content">
+                                    <div class="card-content">
 
-                                    <div class="card-cat">
-                                    <a href="#" class="card-cat-link">The ultimate iPhone.</a>
+                                        <div class="card-cat">
+                                            <a href="#" class="card-cat-link"><?php echo $fetch_products['details']; ?></a>
+                                        </div>
+
+                                        <h3 class="h3 card-title">
+                                            <a href="#"><?php echo $fetch_products['name']; ?></a>
+                                        </h3>
+
+                                        <data class="card-price" value="<?php echo $fetch_products['price']; ?>">P <?php echo $fetch_products['price']; ?></data>
+
                                     </div>
-
-                                    <h3 class="h3 card-title">
-                                    <a href="#">iPhone 15 Pro</a>
-                                    </h3>
-
-                                    <data class="card-price" value="180.85">P 58,541.50</data>
-
-                                </div>
 
                                 </div>
                             </li>
-
-                            <li class="product-item">
-                                <div class="product-card" tabindex="0">
-
-                                <figure class="card-banner">
-                                    <img src="./assets/img/featured/iphone_15.png" width="312" height="350" loading="lazy"
-                                    alt="Leather Mens Slipper" class="image-contain">
-
-                                    <div class="card-badge">New</div>
-                                    
-                                    <ul class="card-action-list">
-
-                                    <li class="card-action-item">
-                                        <button class="card-action-btn" aria-labelledby="card-label-1">
-                                        <ion-icon name="cart-outline"></ion-icon>
-                                        </button>
-
-                                        <div class="card-action-tooltip" id="card-label-1">Add to Cart</div>
-                                    </li>
-
-                                    <li class="card-action-item">
-                                        <button class="card-action-btn" aria-labelledby="card-label-2">
-                                        <ion-icon name="heart-outline"></ion-icon>
-                                        </button>
-
-                                        <div class="card-action-tooltip" id="card-label-2">Buy Now</div>
-                                    </li>
-
-                                    <li class="card-action-item">
-                                        <button class="card-action-btn" aria-labelledby="card-label-3">
-                                        <ion-icon name="eye-outline"></ion-icon>
-                                        </button>
-
-                                        <div class="card-action-tooltip" id="card-label-3">Quick View</div>
-                                    </li>
-
-                                    </ul>
-                                </figure>
-
-                                <div class="card-content">
-
-                                    <div class="card-cat">
-                                    <a href="#" class="card-cat-link">A total powerhouse.</a>
-                                    </div>
-
-                                    <h3 class="h3 card-title">
-                                    <a href="#">iPhone 15</a>
-                                    </h3>
-
-                                    <data class="card-price" value="190.85">P 46,821.60</data>
-
-                                </div>
-
-                                </div>
-                            </li>
-
-                            <li class="product-item">
-                                <div class="product-card" tabindex="0">
-
-                                <figure class="card-banner">
-                                    <img src="./assets/img/featured/iphone_14.png" width="312" height="350" loading="lazy"
-                                    alt="Simple Fabric Shoe" class="image-contain">
-
-                                    <ul class="card-action-list">
-
-                                    <li class="card-action-item">
-                                        <button class="card-action-btn" aria-labelledby="card-label-1">
-                                        <ion-icon name="cart-outline"></ion-icon>
-                                        </button>
-
-                                        <div class="card-action-tooltip" id="card-label-1">Add to Cart</div>
-                                    </li>
-
-                                    <li class="card-action-item">
-                                        <button class="card-action-btn" aria-labelledby="card-label-2">
-                                        <ion-icon name="heart-outline"></ion-icon>
-                                        </button>
-
-                                        <div class="card-action-tooltip" id="card-label-2">Buy Now</div>
-                                    </li>
-
-                                    <li class="card-action-item">
-                                        <button class="card-action-btn" aria-labelledby="card-label-3">
-                                        <ion-icon name="eye-outline"></ion-icon>
-                                        </button>
-
-                                        <div class="card-action-tooltip" id="card-label-3">Quick View</div>
-                                    </li>
-
-                                    </ul>
-                                </figure>
-
-                                <div class="card-content">
-
-                                    <div class="card-cat">
-                                    <a href="#" class="card-cat-link">As amazing as ever.</a>
-                                    </div>
-
-                                    <h3 class="h3 card-title">
-                                    <a href="#">iPhone 14</a>
-                                    </h3>
-
-                                    <data class="card-price" value="160.85">P 40,961.80</data>
-
-                                </div>
-
-                                </div>
-                            </li>
-
-                            <li class="product-item">
-                                <div class="product-card" tabindex="0">
-
-                                <figure class="card-banner">
-                                    <img src="./assets/img/featured/iphone_13.png" width="312" height="350" loading="lazy"
-                                    alt="Air Jordan 7 Retro " class="image-contain">
-
-                                    <div class="card-badge"> -25%</div>
-
-                                    <ul class="card-action-list">
-
-                                    <li class="card-action-item">
-                                        <button class="card-action-btn" aria-labelledby="card-label-1">
-                                        <ion-icon name="cart-outline"></ion-icon>
-                                        </button>
-
-                                        <div class="card-action-tooltip" id="card-label-1">Add to Cart</div>
-                                    </li>
-
-                                    <li class="card-action-item">
-                                        <button class="card-action-btn" aria-labelledby="card-label-2">
-                                        <ion-icon name="heart-outline"></ion-icon>
-                                        </button>
-
-                                        <div class="card-action-tooltip" id="card-label-2">Buy Now</div>
-                                    </li>
-
-                                    <li class="card-action-item">
-                                        <button class="card-action-btn" aria-labelledby="card-label-3">
-                                        <ion-icon name="eye-outline"></ion-icon>
-                                        </button>
-
-                                        <div class="card-action-tooltip" id="card-label-3">Quick View</div>
-                                    </li>
-
-                                    </ul>
-                                </figure>
-
-                                <div class="card-content">
-
-                                    <div class="card-cat">
-                                    <a href="#" class="card-cat-link">All kinds of awesome.</a>
-                                    </div>
-
-                                    <h3 class="h3 card-title">
-                                    <a href="#">iPhone 13</a>
-                                    </h3>
-
-                                    <data class="card-price" value="170.85">P 26,325.65 <del>P 35,101.40</del></data>
-
-                                </div>
-
-                                </div>
-                            </li>
+                                            
+                            <?php
+                                }
+                                } else {
+                                    echo '<p class="empty">No products added yet!</p>';
+                                }
+                            ?>
 
                         </ul>
 
@@ -719,7 +571,7 @@
                         <h3 class="h4 card-title">Free Shiping</h3>
 
                         <p class="card-text">
-                            All orders over <span>P 30,000</span>
+                            All orders over <span>P 10,000</span>
                         </p>
                         </div>
 
@@ -1063,6 +915,7 @@
 
         <!-- Custome js -->
         <script src="./assets/js/script.js"></script>
+        <script src="./assets/js/filter.js"></script>
 
         <!-- Ionicon link -->
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

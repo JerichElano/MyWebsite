@@ -157,20 +157,6 @@
 
          </section>
 
-         <section id="products" class="add-products">
-
-            <img src="assets/img/phones/phone15.jpg" alt="Phone" class="display">
-            <form action="" method="POST" enctype="multipart/form-data">
-               <h3>Add new product</h3>
-               <input type="text" class="box" required placeholder="Enter product name" name="name">
-               <input type="number" min="0" class="box" required placeholder="Enter product price" name="price">
-               <textarea name="details" class="box" required placeholder="Enter product details" cols="30" rows="10"></textarea>
-               <input type="file" accept="image/jpg, image/jpeg, image/png" required class="box" name="image">
-               <input type="submit" value="add product" name="add-product" class="btn">
-            </form>
-
-         </section>
-
          <section id="show-products" class="show-products">
 
             <div class="box-container">
@@ -181,31 +167,31 @@
                      while ($fetch_products = mysqli_fetch_assoc($select_products)) {
                ?>
                         <li class="product-item">
-    <div class="product-card" tabindex="0">
+                           <div class="product-card" tabindex="0">
 
-        <figure class="card-banner">
-            <img src="assets/img/uploaded-img/<?php echo $fetch_products['image']; ?>" width="312" height="350" loading="lazy" alt="Product Image" class="image-contain">
-        </figure>
+                              <figure class="card-banner">
+                                 <img src="assets/img/uploaded-img/<?php echo $fetch_products['image']; ?>" width="312" height="350" loading="lazy" alt="Product Image" class="image-contain">
+                              </figure>
 
-        <div class="card-content">
-            <h3 class="h3 card-title">
-                <a href="#"><?php echo $fetch_products['name']; ?></a>
-            </h3>
+                              <div class="card-content">
+                                 <h3 class="h3 card-title">
+                                    <a href="#"><?php echo $fetch_products['name']; ?></a>
+                                 </h3>
 
-            <p class="card-price">P<?php echo $fetch_products['price']; ?></p>
-            
-            <div class="card-cat">
-                <a href="#" class="card-cat-link"><?php echo $fetch_products['details']; ?></a>
-            </div>
-        </div>
+                                 <p class="card-price">P<?php echo $fetch_products['price']; ?></p>
+                                 
+                                 <div class="card-cat">
+                                    <a href="#" class="card-cat-link"><?php echo $fetch_products['details']; ?></a>
+                                 </div>
+                              </div>
 
-        <div class="admin-actions">
-            <a href="admin-update-product.php?update=<?php echo $fetch_products['id']; ?>" class="btn">Update</a>
-            <a href="admin-page.php?delete=<?php echo $fetch_products['id']; ?>" class="btn" onclick="return confirm('Delete this product?');">Delete</a>
-        </div>
+                              <div class="admin-actions">
+                                 <a href="admin-update-product.php?update=<?php echo $fetch_products['id']; ?>" class="btn">Update</a>
+                                 <a href="admin-page.php?delete=<?php echo $fetch_products['id']; ?>" class="btn" onclick="return confirm('Delete this product?');">Delete</a>
+                              </div>
 
-    </div>
-</li>
+                           </div>
+                        </li>
 
                         <?php
                      }
@@ -215,6 +201,21 @@
                         ?>
             </div>
             
+
+         </section>
+         
+         <section id="products" class="add-products">
+
+            <img src="assets/img/phones/phone15.jpg" alt="Phone" class="display">
+            
+            <form action="" method="POST" enctype="multipart/form-data">
+               <h3>Add new product</h3>
+               <input type="text" class="box" required placeholder="Enter product name" name="name">
+               <input type="number" min="0" class="box" required placeholder="Enter product price" name="price">
+               <textarea name="details" class="box" required placeholder="Enter product details" cols="30" rows="10"></textarea>
+               <input type="file" accept="image/jpg, image/jpeg, image/png" required class="box" name="image">
+               <input type="submit" value="add product" name="add-product" class="btn">
+            </form>
 
          </section>
 

@@ -10,7 +10,7 @@ if (isset($_SESSION['selected_products'])) {
     $pids = implode(",", array_map('intval', $selected_products));
 }
 
-if (isset($_SESSION['checker']) && isset($_SESSION['product_id']) && isset($_SESSION['product_name']) && isset($_SESSION['product_price']) && isset($_SESSION['product_image']) && isset($_SESSION['product_quantity'])) {
+if (isset($_SESSION['checker'])) {
     $checker = $_SESSION['checker'];
     $product_id = $_SESSION['product_id'];
     $product_name = $_SESSION['product_name'];
@@ -26,7 +26,8 @@ if (!isset($account_id)) {
 }
 
 // For placing order
-if (isset($_POST['order']) && !isset($_SESSION['checker'])) {
+// if (isset($_POST['order']) && !isset($_SESSION['checker'])) {
+if (isset($_POST['order']) && isset($pids)) {
     $name = mysqli_real_escape_string($conn, $_POST['name']);
     $number = mysqli_real_escape_string($conn, $_POST['number']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
@@ -63,9 +64,12 @@ if (isset($_POST['order']) && !isset($_SESSION['checker'])) {
         exit();
     }
 
+    unset($_SESSION['selected_products']); // I'm not sure about this one, but continue from this part
+
     // header('location: index.php#recommended');
 
-} elseif (isset($_POST['order']) && isset($_SESSION['checker'])) {
+// } elseif (isset($_POST['order']) && isset($_SESSION['checker'])) {
+} elseif (isset($_POST['order']) && !isset($pids)) {
     $name = mysqli_real_escape_string($conn, $_POST['name']);
     $number = mysqli_real_escape_string($conn, $_POST['number']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
@@ -84,12 +88,12 @@ if (isset($_POST['order']) && !isset($_SESSION['checker'])) {
     $_SESSION['messages'][] = 'Order placed successfully';
     header('location: index.php#Smartphones');
 
-    unset($_SESSION['checker']);
-    unset($_SESSION['product_id']);
-    unset($_SESSION['product_name']);
-    unset($_SESSION['product_price']);
-    unset($_SESSION['product_image']);
-    unset($_SESSION['product_quantity']);
+    // unset($_SESSION['checker']);
+    // unset($_SESSION['product_id']);
+    // unset($_SESSION['product_name']);
+    // unset($_SESSION['product_price']);
+    // unset($_SESSION['product_image']);
+    // unset($_SESSION['product_quantity']);
 
     exit();
 
@@ -177,11 +181,10 @@ if (isset($_POST['order']) && !isset($_SESSION['checker'])) {
                     </div>
                     <div class="inputBox">
                         <span>Payment method :</span>
-                        <select name="method" required>
-                            <option value="cash on delivery">Cash on delivery</option>
-                            <option value="credit card">Credit card</option>
-                            <option value="paypal">Paypal</option>
-                                <option value="paytm">Gcash</option>
+                            <select name="method" required>
+                                <option value="cash on delivery">Cash on delivery</option>
+                                <option value="paypal">Paypal</option>
+                                <option value="gcash">Gcash</option>
                             </select>
                         </div>
                         <div class="inputBox">
@@ -211,13 +214,11 @@ if (isset($_POST['order']) && !isset($_SESSION['checker'])) {
                     </div>
 
                     <input type="submit" name="order" value="order now" class="btn">
+                </div>
 
-                </form>
+            </form>
 
-            </section>
-
-        </div>
-
+        </section>
 
 
 

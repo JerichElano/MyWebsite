@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function() {
     </div>
     <div class="navmenu">
         <a href="cart.php"><img src="assets/img/cart.svg" alt="Cart Icon"></a>
-        <a href="#" id="account-icon"><img src="assets/img/account.svg" alt="Account Icon"></a>
+        <a href="#" id="account-icon"><img src="assets/img/account.svg" alt="Account Icon"><span class="badge badge-light">4</span></a>
     </div>
     <div class="account-box" style="display: none;">
         <?php if (isset($_SESSION['user_name']) && isset($_SESSION['user_email'])) : ?>
