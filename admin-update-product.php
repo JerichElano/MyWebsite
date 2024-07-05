@@ -16,29 +16,34 @@ if(isset($_POST['update_product'])){
    $name = mysqli_real_escape_string($conn, $_POST['name']);
    $price = mysqli_real_escape_string($conn, $_POST['price']);
    $details = mysqli_real_escape_string($conn, $_POST['details']);
+   $category = mysqli_real_escape_string($conn, $_POST['category']);
+   $featured = mysqli_real_escape_string($conn, $_POST['featured']);
+   $type = mysqli_real_escape_string($conn, $_POST['type']);
 
-   mysqli_query($conn, "UPDATE `product` SET name = '$name', details = '$details', price = '$price' WHERE id = '$update_p_id'") or die('query failed');
+   mysqli_query($conn, "UPDATE `product` SET name = '$name', details = '$details', price = '$price', category = '$category', featured = '$featured', type = '$type' WHERE id = '$update_p_id'") or die('query failed');
 
    $image = $_FILES['image']['name'];
    $image_size = $_FILES['image']['size'];
    $image_tmp_name = $_FILES['image']['tmp_name'];
-   $image_folter = 'assets/img/uploaded-img/'.$image;
+   $image_folder = 'assets/img/uploaded-img/'.$image;
    $old_image = $_POST['update_p_image'];
    
    if(!empty($image)){
       if($image_size > 2000000){
-         $message[] = 'image file size is too large!';
+         $_SESSION['messages'][] = 'Image file size is too large!';
       }else{
          mysqli_query($conn, "UPDATE `product` SET image = '$image' WHERE id = '$update_p_id'") or die('query failed');
-         move_uploaded_file($image_tmp_name, $image_folter);
+         move_uploaded_file($image_tmp_name, $image_folder);
          unlink('assets/img/uploaded-img/'.$old_image);
          $_SESSION['messages'][] = 'Image updated successfully!';
       }
    }
 
    $_SESSION['messages'][] = 'Product updated successfully!';
-
+   header('Location: admin-page.php#show-products');
+   exit();
 }
+
 
 ?>
 
@@ -102,13 +107,36 @@ if(isset($_POST['update_product'])){
 
 
 <form action="" method="post" enctype="multipart/form-data">
-   <img src="assets/img/uploaded-img/<?php echo $fetch_products['image']; ?>" class="image"  alt="">
+   <img src="assets/img/uploaded-img/<?php echo $fetch_products['image']; ?>" class="image" alt="">
    <input type="hidden" value="<?php echo $fetch_products['id']; ?>" name="update_p_id">
    <input type="hidden" value="<?php echo $fetch_products['image']; ?>" name="update_p_image">
    <input type="text" class="box" value="<?php echo $fetch_products['name']; ?>" required placeholder="update product name" name="name">
    <input type="number" min="0" class="box" value="<?php echo $fetch_products['price']; ?>" required placeholder="update product price" name="price">
    <textarea name="details" class="box" required placeholder="update product details" cols="30" rows="10"><?php echo $fetch_products['details']; ?></textarea>
    <input type="file" accept="image/jpg, image/jpeg, image/png" class="box" name="image">
+   
+   <select name="category" required>
+      <option value="" disabled selected>Choose category</option>
+      <option value="samsung" <?php if($fetch_products['category'] == 'samsung') echo 'selected'; ?>>Samsung</option>
+      <option value="apple" <?php if($fetch_products['category'] == 'apple') echo 'selected'; ?>>Apple</option>
+      <option value="redmi" <?php if($fetch_products['category'] == 'redmi') echo 'selected'; ?>>Redmi</option>
+      <option value="oppo" <?php if($fetch_products['category'] == 'oppo') echo 'selected'; ?>>Oppo</option>
+   </select>
+
+   <select name="featured" required>
+      <option value="" disabled selected>Is it Featured?</option>
+      <option value="featured" <?php if($fetch_products['featured'] == 'featured') echo 'selected'; ?>>Featured</option>
+      <option value="not-featured" <?php if($fetch_products['featured'] == 'not-featured') echo 'selected'; ?>>Not featured</option>
+   </select>
+
+   <select name="type" required>
+      <option value="" disabled selected>Type of phone</option>
+      <option value="budget" <?php if($fetch_products['type'] == 'budget') echo 'selected'; ?>>Budget</option>
+      <option value="flagship" <?php if($fetch_products['type'] == 'flagship') echo 'selected'; ?>>Flagship</option>
+      <option value="gaming" <?php if($fetch_products['type'] == 'gaming') echo 'selected'; ?>>Gaming</option>
+      <option value="sale" <?php if($fetch_products['type'] == 'sale') echo 'selected'; ?>>Sale</option>
+   </select>
+   
    <input type="submit" value="update product" name="update_product" class="btn">
    <a href="admin-page.php#show-products" class="btn">go back</a>
 </form>

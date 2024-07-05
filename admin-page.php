@@ -219,22 +219,22 @@
                <textarea name="details" class="box" required placeholder="Enter product details" cols="30" rows="10"></textarea>
                <input type="file" accept="image/jpg, image/jpeg, image/png" required class="box" name="image" id="imageInput">
                
-               <select name="category">
-                  <option disabled selected>Choose category</option>
+               <select name="category" required>
+                  <option value="" disabled selected>Choose category</option>
                   <option value="samsung">Samsung</option>
                   <option value="apple">Apple</option>
                   <option value="redmi">Redmi</option>
                   <option value="oppo">Oppo</option>
                </select>
 
-               <select name="featured">
-                  <option disabled selected>Is it Featured?</option>
+               <select name="featured" required>
+                  <option value="" disabled selected>Is it Featured?</option>
                   <option value="featured">Featured</option>
                   <option value="not-featured">Not featured</option>
                </select>
 
-               <select name="type">
-                  <option disabled selected>Type of phone</option>
+               <select name="type" required>
+                  <option value="" disabled selected>Type of phone</option>
                   <option value="budget">Budget</option>
                   <option value="flagship">Flagship</option>
                   <option value="gaming">Gaming</option>

@@ -127,9 +127,9 @@
                             <button data-name="gaming" class="filter-btn">Gaming</button>
                         </li>
 
-                        <li>
-                            <button data-name="apple" class="filter-btn">Sale</button>
-                        </li>
+                        <!-- <li>
+                            <button data-name="noAvailable" class="filter-btn">Sale</button>
+                        </li> -->
 
                     </ul>
 
@@ -183,8 +183,7 @@
 
                                 <div class="card-content">
                                     <div class="card-cat">
-                                        <a href="#" class="card-cat-link">64GB</a> /
-                                        <a href="#" class="card-cat-link">128GB</a>
+                                        <a href="#" class="card-cat-link"><?php echo $fetch_products['details']; ?></a>
                                     </div>
                                     <h3 class="h3 card-title">
                                         <a href="#"><?php echo $fetch_products['name']; ?></a>

@@ -323,9 +323,9 @@
                             <button data-name="redmi" class="filter-btn">Redmi</button>
                         </li>
 
-                        <li>
+                        <!-- <li>
                             <button data-name="oppo" class="filter-btn">Oppo</button>
-                        </li>
+                        </li> -->
 
                     </ul>
 
