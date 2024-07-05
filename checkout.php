@@ -25,9 +25,27 @@ if (!isset($account_id)) {
     exit();
 }
 
+function generateOrderId($conn) {
+    $usedIds = [];
+
+    $result = mysqli_query($conn, "SELECT id FROM orders");
+    if ($result) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $usedIds[] = $row['id'];
+        }
+    }
+
+    do {
+        $randomNumber = mt_rand(1, 100);
+    } while (in_array($randomNumber, $usedIds));
+
+    return $randomNumber;
+}
+
 // For placing order
 // if (isset($_POST['order']) && !isset($_SESSION['checker'])) {
 if (isset($_POST['order']) && isset($pids)) {
+    $order_id = generateOrderId($conn); 
     $name = mysqli_real_escape_string($conn, $_POST['name']);
     $number = mysqli_real_escape_string($conn, $_POST['number']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
@@ -54,10 +72,10 @@ if (isset($_POST['order']) && isset($pids)) {
 
     if ($cart_total == 0){
         $_SESSION['messages'][] = 'Your cart is empty!';
-    } elseif (mysqli_num_rows($order_query) > 0){
-        $_SESSION['messages'][] = 'Order placed already!';
+    // } elseif (mysqli_num_rows($order_query) > 0){
+    //     $_SESSION['messages'][] = 'Order placed already!';
     } else {
-        mysqli_query($conn, "INSERT INTO `orders`(account_id, name, number, email, method, address, total_products, total_price, placed_on) VALUES('$account_id', '$name', '$number', '$email', '$method', '$address', '$total_products', '$cart_total', '$placed_on')") or die('query failed');
+        mysqli_query($conn, "INSERT INTO `orders`(id, account_id, name, number, email, method, address, total_products, total_price, placed_on) VALUES('$order_id', '$account_id', '$name', '$number', '$email', '$method', '$address', '$total_products', '$cart_total', '$placed_on')") or die('query failed');
         mysqli_query($conn, "DELETE FROM `cart` WHERE pid IN ($pids) AND account_id = '$account_id'") or die('query failed');
         $_SESSION['messages'][] = 'Order placed successfully';
         header('Location: index.php#Smartphones');
@@ -70,6 +88,7 @@ if (isset($_POST['order']) && isset($pids)) {
 
 // } elseif (isset($_POST['order']) && isset($_SESSION['checker'])) {
 } elseif (isset($_POST['order']) && !isset($pids)) {
+    $order_id = generateOrderId($conn); 
     $name = mysqli_real_escape_string($conn, $_POST['name']);
     $number = mysqli_real_escape_string($conn, $_POST['number']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
@@ -83,7 +102,7 @@ if (isset($_POST['order']) && isset($pids)) {
 
     $order_query = mysqli_query($conn, "SELECT * FROM `orders` WHERE name = '$name' AND number = '$number' AND email = '$email' AND method = '$method' AND address = '$address' AND total_products = '$total_products' AND total_price = '$cart_total'") or die('query failed');
 
-    mysqli_query($conn, "INSERT INTO `orders`(account_id, name, number, email, method, address, total_products, total_price, placed_on) VALUES('$account_id', '$name', '$number', '$email', '$method', '$address', '$total_products', '$cart_total', '$placed_on')") or die('query failed');
+    mysqli_query($conn, "INSERT INTO `orders`(id, account_id, name, number, email, method, address, total_products, total_price, placed_on) VALUES('$order_id', '$account_id', '$name', '$number', '$email', '$method', '$address', '$total_products', '$cart_total', '$placed_on')") or die('query failed');
     // mysqli_query($conn, "DELETE FROM `cart` WHERE account_id = '$account_id'") or die('query failed');
     $_SESSION['messages'][] = 'Order placed successfully';
     header('location: index.php#Smartphones');

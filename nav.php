@@ -10,6 +10,22 @@ if(isset($_SESSION['messages'])){
    unset($_SESSION['messages']);
 //    echo '<script>setTimeout(function() { window.location.href = "index.php"; }, 3000);</script>';
 }
+
+if (isset($_SESSION['account_id'])) {
+    $account_id = $_SESSION['account_id'];
+
+    // SQL query to calculate the total number of products in the cart for the given account_id
+    $stmt = $conn->prepare("SELECT SUM(quantity) AS total_products FROM `cart` WHERE `account_id` = ?");
+    $stmt->bind_param("i", $account_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $total_products = $row['total_products'];
+
+    $stmt->close();
+} else {
+    $total_products = '';
+}
 ?>
 
 <script>
@@ -28,6 +44,8 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 <header class="header">
+
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
     
     <div class="logo">
         <a href="#" class="logo-link">
@@ -42,8 +60,13 @@ document.addEventListener("DOMContentLoaded", function() {
         </div>
     </div>
     <div class="navmenu">
-        <a href="cart.php"><img src="assets/img/cart.svg" alt="Cart Icon"></a>
-        <a href="#" id="account-icon"><img src="assets/img/account.svg" alt="Account Icon"><span class="badge badge-light">4</span></a>
+        <a href="cart.php">
+            <img src="assets/img/cart.svg" alt="Cart Icon">
+            <?php if (isset($total_products) && $total_products > 0) : ?>
+                <strong class="badge"><?php echo $total_products; ?></strong>
+            <?php endif; ?>
+        </a>
+        <a href="#" id="account-icon"><img src="assets/img/account.svg" alt="Account Icon"></a>
     </div>
     <div class="account-box" style="display: none;">
         <?php if (isset($_SESSION['user_name']) && isset($_SESSION['user_email'])) : ?>

@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         <div class="navbar">
             <a href="admin-page.php#dashboard">Dashboard</a>
-            <a href="admin-page.php#products">Products</a>
+            <a href="admin-page.php#show-products">Products</a>
             <a href="admin-page.php#orders">Orders</a>
             <a href="admin-page.php#accounts">Accounts</a>
         </div>

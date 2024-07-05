@@ -116,15 +116,15 @@
                         </li>
 
                         <li>
-                            <button data-name="samsung" class="filter-btn">Budget</button>
+                            <button data-name="budget" class="filter-btn">Budget</button>
                         </li>
 
                         <li>
-                            <button data-name="apple" class="filter-btn">Flagship</button>
+                            <button data-name="flagship" class="filter-btn">Flagship</button>
                         </li>
 
                         <li>
-                            <button data-name="redmi" class="filter-btn">Gaming</button>
+                            <button data-name="gaming" class="filter-btn">Gaming</button>
                         </li>
 
                         <li>
@@ -135,12 +135,12 @@
 
                     <ul class="product-list">
                         <?php
-                            $select_products = mysqli_query($conn, "SELECT * FROM `product` LIMIT 12") or die('query failed');
+                            $select_products = mysqli_query($conn, "SELECT * FROM `product` LIMIT 16") or die('query failed');
                             if (mysqli_num_rows($select_products) > 0) {
                                 while ($fetch_products = mysqli_fetch_assoc($select_products)) {
                         ?>
                         
-                        <li class="product-item" data-category="<?php echo strtolower($fetch_products['category']); ?>">
+                        <li class="product-item" data-category="<?php echo strtolower($fetch_products['type']); ?>">
                                 <div class="product-card" tabindex="0">
 
                                     <figure class="card-banner">

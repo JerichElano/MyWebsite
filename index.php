@@ -379,8 +379,7 @@
 
                                 <div class="card-content">
                                     <div class="card-cat">
-                                        <a href="#" class="card-cat-link">64GB</a> /
-                                        <a href="#" class="card-cat-link">128GB</a>
+                                        <a href="#" class="card-cat-link"><?php echo $fetch_products['details']; ?></a>
                                     </div>
                                     <h3 class="h3 card-title">
                                         <a href="#"><?php echo $fetch_products['name']; ?></a>
@@ -738,19 +737,19 @@
                     <ul class="social-list">
 
                         <li>
-                        <a href="#" class="social-link">
+                        <a href="https://facebook.com" target="_blank" class="social-link">
                             <ion-icon name="logo-facebook"></ion-icon>
                         </a>
                         </li>
 
                         <li>
-                        <a href="#" class="social-link">
+                        <a href="https://pinterest.com" target="_blank" class="social-link">
                             <ion-icon name="logo-pinterest"></ion-icon>
                         </a>
                         </li>
 
                         <li>
-                        <a href="#" class="social-link">
+                        <a href="https://linkedin.com" target="_blank" class="social-link">
                             <ion-icon name="logo-linkedin"></ion-icon>
                         </a>
                         </li>
@@ -812,7 +811,7 @@
                             </li>
 
                             <li>
-                                <a href="#" class="footer-link">
+                                <a href="cart.php" class="footer-link">
                                     <ion-icon name="chevron-forward-outline"></ion-icon>
 
                                     <span class="footer-link-text">View Cart</span>
@@ -820,7 +819,7 @@
                             </li>
 
                             <li>
-                                <a href="#" class="footer-link">
+                                <a href="#Smartphones" class="footer-link">
                                     <ion-icon name="chevron-forward-outline"></ion-icon>
 
                                     <span class="footer-link-text">New Products</span>

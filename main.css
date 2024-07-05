@@ -1739,6 +1739,17 @@ body {
     /**
      * HEADER
      */
+
+.navmenu .badge {
+  position: absolute;
+  background-color: var(--white);
+  text-align: center;
+  color: var(--black);
+  border-radius: 50%;
+  font-size: 12px;
+  width: 18px;
+  height: 18px;
+}
   
     .nav-open-btn,
     .nav-close-btn,
@@ -2365,6 +2376,17 @@ body {
 /* End of User */
 /* Admin */
 /* Admin Page */
+.header .logo .navbar .badge {
+  position: absolute;
+  background-color: var(--white);
+  text-align: center;
+  color: var(--black);
+  border-radius: 50%;
+  font-size: 12px;
+  width: 18px;
+  height: 18px;
+}
+
 .header .account-box .reg {
   display: inline;
   text-decoration: none; 
@@ -2542,6 +2564,11 @@ body {
     height: 10rem;
     resize: none;
  }
+
+ .show-products h2 {
+  padding-bottom: 20px;
+  color: var(--white);
+ }
  
  .show-products .box-container{
     display: grid;
@@ -2636,7 +2663,7 @@ body {
  
  .placed-orders .box-container{
     display: grid;
-    grid-template-columns: repeat(auto-fit, 33rem);
+    grid-template-columns: repeat(auto-fit, 20rem);
     gap:1.5rem;
     align-items: flex-start;
     max-width: 1200px;
@@ -2651,31 +2678,53 @@ body {
     box-shadow: var(--box-shadow);
     border-radius: .5rem;
  }
+
+ .placed-orders .box-container .box .orders-container {
+  min-height: 260px;
+  height: auto;
+ }
  
  .placed-orders .box-container .box p{
-    margin-bottom: 1rem;
-    font-size: 19px;
+    margin-bottom: .5rem;
+    font-size: 12px;
     color:var(--light-color);
  }
  
  .placed-orders .box-container .box p span{
-    color:var(--pink);
+    color:var(--black);
  }
  
  .placed-orders .box-container .box form{
-    margin-top: 20px;
+    margin-top: 15px;
     text-align: center;
  }
  
  .placed-orders .box-container .box form select{
     width: 100%;
     border:var(--border);
-    padding: .9rem 1rem;
-    font-size: 20px;
+    padding: .4rem 1rem;
+    font-size: 13px;
     color:var(--black);
     border:var(--border);
     border-radius: .5rem;
     margin:.5rem 0;
+ }
+
+ .placed-orders .box-container .box .button {
+  gap: 15px;
+  display: flex;
+  justify-content: center;
+ }
+
+ .placed-orders .box-container .box .btn {
+  width: 50%;
+  padding: 5px 10px;
+  margin-top: 10px;
+  justify-content: center !important;
+ }
+
+ .placed-orders .box-container .box .btn:hover {
+  color: var(--white);
  }
  
  .users .box-container{

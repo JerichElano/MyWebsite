@@ -18,13 +18,16 @@
       $image_size = $_FILES['image']['size'];
       $image_tmp_name = $_FILES['image']['tmp_name'];
       $image_folter = 'assets/img/uploaded-img/'.$image;
+      $category = mysqli_real_escape_string($conn, $_POST['category']);
+      $isFeatured = mysqli_real_escape_string($conn, $_POST['featured']);
+      $type = mysqli_real_escape_string($conn, $_POST['type']);
 
       $select_product_name = mysqli_query($conn, "SELECT name FROM `product` WHERE name = '$name'") or die('query failed');
 
       if (mysqli_num_rows($select_product_name) > 0) {
          $_SESSION['messages'][] = 'Product name already exist!';
       } else {
-         $insert_product = mysqli_query($conn, "INSERT INTO `product`(name, details, price, image) VALUES('$name', '$details', '$price', '$image')") or die('query failed');
+         $insert_product = mysqli_query($conn, "INSERT INTO `product`(name, details, price, image, category, featured, type) VALUES('$name', '$details', '$price', '$image', '$category', '$isFeatured', '$type')") or die('query failed');
 
          if ($insert_product) {
             // if ($image_size > 2000000) {
@@ -158,6 +161,7 @@
          </section>
 
          <section id="show-products" class="show-products">
+            <h2 class="h2 section-title">Products Added</h2>
 
             <div class="box-container">
 
@@ -206,22 +210,46 @@
          
          <section id="products" class="add-products">
 
-            <img src="assets/img/phones/phone15.jpg" alt="Phone" class="display">
+            <img src="assets/img/phones/phone15.jpg" alt="Phone" class="display" id="displayImage">
             
             <form action="" method="POST" enctype="multipart/form-data">
                <h3>Add new product</h3>
                <input type="text" class="box" required placeholder="Enter product name" name="name">
                <input type="number" min="0" class="box" required placeholder="Enter product price" name="price">
                <textarea name="details" class="box" required placeholder="Enter product details" cols="30" rows="10"></textarea>
-               <input type="file" accept="image/jpg, image/jpeg, image/png" required class="box" name="image">
+               <input type="file" accept="image/jpg, image/jpeg, image/png" required class="box" name="image" id="imageInput">
+               
+               <select name="category">
+                  <option disabled selected>Choose category</option>
+                  <option value="samsung">Samsung</option>
+                  <option value="apple">Apple</option>
+                  <option value="redmi">Redmi</option>
+                  <option value="oppo">Oppo</option>
+               </select>
+
+               <select name="featured">
+                  <option disabled selected>Is it Featured?</option>
+                  <option value="featured">Featured</option>
+                  <option value="not-featured">Not featured</option>
+               </select>
+
+               <select name="type">
+                  <option disabled selected>Type of phone</option>
+                  <option value="budget">Budget</option>
+                  <option value="flagship">Flagship</option>
+                  <option value="gaming">Gaming</option>
+                  <option value="sale">Sale</option>
+               </select>
+
                <input type="submit" value="add product" name="add-product" class="btn">
+
             </form>
 
          </section>
 
          <section id="orders" class="placed-orders">
 
-            <h3 class="title">placed orders</h3>
+            <h3 class="title" style="font-size: 30px;">placed orders</h3>
 
             <div class="box-container">
                <?php   
@@ -230,15 +258,18 @@
                   while ($fetch_orders = mysqli_fetch_assoc($select_orders)) {
                ?>
                   <div class="box">
-                     <p> User id : <span><?php echo $fetch_orders['account_id']; ?></span> </p>
-                     <p> Placed on : <span><?php echo $fetch_orders['placed_on']; ?></span> </p>
-                     <p> Name : <span><?php echo $fetch_orders['name']; ?></span> </p>
-                     <p> Number : <span><?php echo $fetch_orders['number']; ?></span> </p>
-                     <p> Email : <span><?php echo $fetch_orders['email']; ?></span> </p>
-                     <p> Address : <span><?php echo $fetch_orders['address']; ?></span> </p>
-                     <p> Products : <span><?php echo $fetch_orders['total_products']; ?></span> </p>
-                     <p> Total price : <span>P<?php echo $fetch_orders['total_price']; ?></span> </p>
-                     <p> Payment method : <span><?php echo $fetch_orders['method']; ?></span> </p>
+                     <div class="orders-container">
+                        <p> User id : <span><?php echo $fetch_orders['account_id']; ?></span> </p>
+                        <p> Placed on : <span><?php echo $fetch_orders['placed_on']; ?></span> </p>
+                        <p> Name : <span><?php echo $fetch_orders['name']; ?></span> </p>
+                        <p> Number : <span><?php echo $fetch_orders['number']; ?></span> </p>
+                        <p> Email : <span><?php echo $fetch_orders['email']; ?></span> </p>
+                        <p> Address : <span><?php echo $fetch_orders['address']; ?></span> </p>
+                        <p> Products : <span><?php echo $fetch_orders['total_products']; ?></span> </p>
+                        <p> Total price : <span>P<?php echo $fetch_orders['total_price']; ?></span> </p>
+                        <p> Payment method : <span><?php echo $fetch_orders['method']; ?></span> </p>
+                     </div>
+
                      <form action="" method="post">
                         <input type="hidden" name="order_id" value="<?php echo $fetch_orders['id']; ?>">
                         <select name="update_payment">
@@ -246,9 +277,12 @@
                            <option value="pending">pending</option>
                            <option value="completed">completed</option>
                         </select>
-                        <input type="submit" name="update_order" value="update" class="btn">
-                        <a href="admin-page.php?delete=<?php echo $fetch_orders['id']; ?>" class="btn" onclick="return confirm('delete this order?');">delete</a>
+                        <div class="button">
+                           <input type="submit" name="update_order" value="update" class="btn">
+                           <a href="admin-page.php?delete=<?php echo $fetch_orders['id']; ?>" class="btn" onclick="return confirm('delete this order?');">delete</a>
+                        </div>
                      </form>
+                     
                   </div>
                <?php
                   }
@@ -287,6 +321,23 @@
       </div>
 
       <script src="js/admin-script.js"></script>
+      
+      <script>
+         document.getElementById('imageInput').addEventListener('change', function(event) {
+            const displayImage = document.getElementById('displayImage');
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+               displayImage.src = e.target.result;
+            };
+            
+            if (file) {
+               reader.readAsDataURL(file);
+            }
+         });
+      </script>
+
 
    </body>
 </html>
